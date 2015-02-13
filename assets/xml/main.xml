@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>  
+	<group id="background">
+	</group>
+	
+    <chrome id="topBar" center_x="true" y="0" width="100%" height="28"/>
+	
+	<dropdown id="this" x="4" y="4">
+		<anchor x="topBar.left" y="topBar.top" x-flush="left" y-flush="top"/>
+		<data id="aboutHelp" label="About & Help"/>
+		<data id="exit" label="Exit"/>
+	</dropdown>
+	<dropdown id="project" x="4">
+		<anchor x="this.right" y="this.top" x-flush="left" y-flush="top"/>
+		<data name="newproj" label="New Project"/>
+		<data name="openproj" label="Open Project..."/>
+		<data name="editproj" label="Edit Project"/>
+		<data name="closeproj" label="Close Project"/>
+	</dropdown>
+	<dropdown id="level" x="4">
+		<anchor x="project.right" y="project.top" x-flush="left" y-flush="top"/>
+		<data name="lvlprop" label="Level Properties"/>
+		<data name="newlvl" label="New Level"/>
+		<data name="openlvl" label="Open Level..."/>
+		<data name="savelvl" label="Save Level"/>
+		<data name="savelvlAs" label="Save Level As..."/>
+		<data name="closelvl" label="Close Level"/>
+	</dropdown>
+	<dropdown id="edit" x="4">
+		<anchor x="level.right" y="level.top" x-flush="left" y-flush="top"/>
+		<data name="undo" label="Undo"/>
+		<data name="redo" label="Redo"/>
+		<data name="cut" label="Cut"/>
+		<data name="copy" label="Copy"/>
+		<data name="paste" label="Paste"/>
+		<data name="selectall" label="Select All"/>
+		<data name="deselect" label="Deselect"/>
+	</dropdown>
+	<dropdown id="view" x="4">
+		<anchor x="edit.right" y="edit.top" x-flush="left" y-flush="top"/>
+		<data name="grid" label="Editing Grid"/>
+		<data name="centerview" label="Center View"/>
+		<data name="zoomin" label="Zoom In"/>
+		<data name="zoomout" label="Zoom Out"/>
+	</dropdown>
+</data>

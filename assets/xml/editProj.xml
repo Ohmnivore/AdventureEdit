@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<include id="global"/>
+	
+	<tab_menu id="tabs" center_x="true" center_y="true" width="70%" height="70%">
+		<tab id="settings" label="Settings"/>
+		<tab id="layers" label="Layers"/>
+		<tab id="entities" label="Entities"/>
+		<group id="settings">
+			<input_text id="name" x="20%" use_def="inputText" text="New Project" />
+			<input_text id="bgColor" x="20%" use_def="inputText" text="0x000000" />
+			<input_text id="gridColor" x="20%" use_def="inputText" text="0xffffff" />
+			<text id="dName" x="10" text="Project Name" />
+			<text id="dBgColor" x="10" text="Background color" />
+			<text id="dGridColor" x="10" text="Grid color" />
+			
+			<align axis="vertical" spacing="10" resize="false">
+				<bounds top="10" bottom="25%"/>
+				<objects value="dName,dBgColor,dGridColor"/>
+				<objects value="name,bgColor,gridColor"/>
+			</align>
+		</group>
+		<group id="layers">
+		</group>
+		<group id="entities">
+			<input_text id="width" x="50%" use_def="inputText" text="16" />
+			<input_text id="height" x="50%" use_def="inputText" text="16" />
+			<input_text id="limit" x="50%" use_def="inputText" text="-1" />
+			<input_text id="color" x="50%" use_def="inputText" text="0xff0000" />
+			<text id="dWidth" x="40%" text="Width" />
+			<text id="dHeight" x="40%" text="Height" />
+			<text id="dLimit" x="40%" text="Limit" />
+			<text id="dColor" x="40%" text="Color" />
+			
+			<align axis="vertical" spacing="10" resize="false">
+				<bounds top="10" bottom="50%"/>
+				<objects value="width,height,limit,color"/>
+				<objects value="dWidth,dHeight,dLimit,dColor"/>
+			</align>
+		</group>
+	</tab_menu>
+</data>
