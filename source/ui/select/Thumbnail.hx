@@ -10,6 +10,8 @@ import flixel.FlxG;
 class Thumbnail extends FlxUISprite
 {
 	public var callback:Thumbnail->Void;
+	public var path:String;
+	
 	private var _toggled:Bool = false;
 	
 	public var toggled(get, set):Bool;
@@ -31,9 +33,10 @@ class Thumbnail extends FlxUISprite
 	
 	private var area:FlxClickArea;
 	
-	public function new(X:Float, Y:Float, Callback:Thumbnail->Void = null) 
+	public function new(X:Float, Y:Float, Path:String, Callback:Thumbnail->Void = null) 
 	{
 		callback = Callback;
+		path = Path;
 		super(X, Y);
 		
 		area = new FlxClickArea(X, Y, width, height, call);

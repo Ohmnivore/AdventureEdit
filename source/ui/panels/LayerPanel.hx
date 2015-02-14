@@ -2,6 +2,7 @@ package ui.panels;
 import flixel.addons.ui.FlxUI9SliceSprite;
 import flixel.addons.ui.FlxUIButton;
 import flixel.addons.ui.FlxUIGroup;
+import haxe.Constraints.Function;
 import openfl.geom.Rectangle;
 
 /**
@@ -12,6 +13,8 @@ class LayerPanel extends FlxUIGroup
 {
 	private var back:FlxUI9SliceSprite;
 	private var lastBtn:FlxUIButton;
+	
+	public var currentLayer:String;
 	
 	public function new(X:Float, Y:Float, Layers:Array<String>) 
 	{
@@ -26,9 +29,30 @@ class LayerPanel extends FlxUIGroup
 		}
 	}
 	
+	private function unToggleAll():Void
+	{
+		for (m in members)
+		{
+			if (Std.is(m, FlxUIButton))
+			{
+				var btn:FlxUIButton = cast m;
+				btn.toggled = false;
+			}
+		}
+	}
+	
+	private function toggle(B:FlxUIButton):Void
+	{
+		unToggleAll();
+		
+		B.toggled = true;
+		currentLayer = B.label.text;
+	}
+	
 	private function addLayer(Name:String):Void
 	{
 		var btn:FlxUIButton = new FlxUIButton(4, 4, Name);
+		btn.onUp.callback = function() { toggle(btn); };
 		btn.has_toggle = true;
 		add(btn);
 		
@@ -37,5 +61,7 @@ class LayerPanel extends FlxUIGroup
 			btn.y = lastBtn.y + lastBtn.height + 4;
 		}
 		lastBtn = btn;
+		
+		toggle(lastBtn);
 	}
 }

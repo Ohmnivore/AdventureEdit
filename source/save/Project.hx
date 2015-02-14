@@ -74,4 +74,11 @@ class Project
 		
 		return xml;
 	}
+	
+	public function reset():Void
+	{
+		levelValues = new Map<String, String>();
+		layers = [];
+		entities = [];
+	}
 }

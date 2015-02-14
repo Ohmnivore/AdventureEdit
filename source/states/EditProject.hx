@@ -120,6 +120,7 @@ class EditProject extends FlxUIState
 		p.name = pName.text;
 		p.bgColor = pBgColor.text;
 		p.gridColor = pGridColor.text;
+		p.reset();
 		
 		for (value in pLevelValues.list.members)
 		{
