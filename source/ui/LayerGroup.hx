@@ -8,6 +8,8 @@ import flixel.FlxSprite;
  */
 class LayerGroup extends ShyGroup
 {
+	public var cursorGroup:ShyGroup;
+	
 	private var layers:Map<String, ShyGroup>;
 	
 	public function new(Layers:Array<String>) 
@@ -22,6 +24,9 @@ class LayerGroup extends ShyGroup
 			
 			layers.set(layer, g);
 		}
+		
+		cursorGroup = new ShyGroup();
+		add(cursorGroup);
 	}
 	
 	public function get(Name:String):ShyGroup

@@ -9,6 +9,8 @@ import flixel.addons.ui.FlxUITabMenu;
 import flixel.FlxG;
 import openfl.geom.Rectangle;
 import save.Cookies;
+import save.Level;
+import sys.io.File;
 import ui.EntList;
 import ui.LayerGroup;
 import ui.panels.LayerPanel;
@@ -33,16 +35,40 @@ class Main extends FlxUIState
 	private var tools:ToolPanel;
 	
 	private var addTool:Add;
+	private var doEdit:Bool = true;
 	
 	private static var opened:Bool = false;
+	
+	private var lvlPath:String;
+	
+	public function new(LvlPath:String = null)
+	{
+		super();
+		
+		lvlPath = LvlPath;
+	}
+	
+	override public function getEvent(id:String, sender:Dynamic, data:Dynamic, ?params:Array<Dynamic>):Void 
+	{
+		super.getEvent(id, sender, data, params);
+		
+		if (id == "click_button" || id == "click_dropdown")
+		{
+			doEdit = false;
+		}
+	}
 	
 	override public function create():Void 
 	{
 		_xml_id = "main";
 		super.create();
 		
+		var menuGen:FlxUIDropDownMenu = cast _ui.getAsset("general");
+		menuGen.callback = handleGeneral;
 		menuProj = cast _ui.getAsset("project");
 		menuProj.callback = handleProject;
+		var menuLvl:FlxUIDropDownMenu = cast _ui.getAsset("level");
+		menuLvl.callback = handleLvl;
 		back = _ui.getGroup("background");
 		
 		if (Reg.project != null)
@@ -61,6 +87,15 @@ class Main extends FlxUIState
 			back.add(tools);
 			
 			addTool = new Add(layerPanel, layers, select);
+			
+			if (Reg.level == null && lvlPath != null)
+			{
+				var content:String = File.getContent(lvlPath);
+				if (StringTools.trim(content) == "")
+					content = null;
+				
+				Reg.level = new Level(layers, Reg.project, lvlPath, content);
+			}
 		}
 		
 		if (!opened)
@@ -85,6 +120,18 @@ class Main extends FlxUIState
 		FlxG.switchState(newState);
 	}
 	
+	private function handleGeneral(ID:String):Void
+	{
+		if (ID == "abouthelp")
+		{
+			FlxG.openURL("https://github.com/Ohmnivore/AdventureEdit");
+		}
+		else if (ID == "exit")
+		{
+			Sys.exit(0);
+		}
+	}
+	
 	private function handleProject(ID:String):Void
 	{
 		if (ID == "newproj")
@@ -107,13 +154,48 @@ class Main extends FlxUIState
 		}
 	}
 	
+	private function handleLvl(ID:String):Void
+	{
+		if (Reg.project != null)
+		{
+			if (ID == "lvlprop")
+			{
+				
+			}
+			else if (ID == "newlvl")
+			{
+				Reg.level = null;
+				FlxG.switchState(new Main(Base.newFile()));
+			}
+			else if (ID == "openlvl")
+			{
+				
+			}
+			else if (ID == "savelvl")
+			{
+				
+			}
+			else if (ID == "savelvlas")
+			{
+				
+			}
+			else if (ID == "closelvl")
+			{
+				Reg.level = null;
+				FlxG.switchState(new Main());
+			}
+		}
+	}
+	
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
 		
-		if (Reg.project != null)
+		if (Reg.project != null && doEdit && FlxG.mouse.screenY < FlxG.height - 72)
 		{
 			addTool.update();
 		}
+		
+		doEdit = true;
 	}
 }

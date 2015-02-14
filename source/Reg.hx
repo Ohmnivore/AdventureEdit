@@ -1,6 +1,7 @@
 package;
 
 import flixel.util.FlxSave;
+import save.Level;
 import save.Project;
 
 /**
@@ -11,4 +12,5 @@ import save.Project;
 class Reg
 {
 	public static var project:Project;
+	public static var level:Level;
 }

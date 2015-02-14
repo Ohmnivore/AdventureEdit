@@ -5,13 +5,13 @@
 	
     <chrome id="topBar" center_x="true" y="0" width="100%" height="28"/>
 	
-	<dropdown id="this" x="4" y="4">
+	<dropdown id="general" x="4" y="4">
 		<anchor x="topBar.left" y="topBar.top" x-flush="left" y-flush="top"/>
-		<data id="aboutHelp" label="About & Help"/>
-		<data id="exit" label="Exit"/>
+		<data name="abouthelp" label="About & Help"/>
+		<data name="exit" label="Exit"/>
 	</dropdown>
 	<dropdown id="project" x="4">
-		<anchor x="this.right" y="this.top" x-flush="left" y-flush="top"/>
+		<anchor x="general.right" y="general.top" x-flush="left" y-flush="top"/>
 		<data name="newproj" label="New Project"/>
 		<data name="openproj" label="Open Project..."/>
 		<data name="editproj" label="Edit Project"/>
@@ -23,7 +23,7 @@
 		<data name="newlvl" label="New Level"/>
 		<data name="openlvl" label="Open Level..."/>
 		<data name="savelvl" label="Save Level"/>
-		<data name="savelvlAs" label="Save Level As..."/>
+		<data name="savelvlas" label="Save Level As..."/>
 		<data name="closelvl" label="Close Level"/>
 	</dropdown>
 	<dropdown id="edit" x="4">

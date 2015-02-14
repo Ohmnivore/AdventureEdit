@@ -2,6 +2,7 @@ package ui.tools;
 import file.ImageHandler;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import ui.edit.EditImg;
 import ui.LayerGroup;
 import ui.panels.LayerPanel;
 import ui.select.List;
@@ -36,6 +37,7 @@ class Add
 	
 	private var stamp:FlxSprite;
 	private var lastStamp:String;
+	private var lastLayer:String;
 	
 	public function new(L:LayerPanel, Layers:LayerGroup, Select:List) 
 	{
@@ -61,15 +63,19 @@ class Add
 			stamp.x = FlxG.mouse.x;
 			stamp.y = FlxG.mouse.y;
 			
-			if (FlxG.mouse.justPressed)
+			if (FlxG.mouse.justReleased)
 			{
-				
+				if (lPanel.currentLayer != null && s.currentThumb != null)
+				{
+					l.get(lPanel.currentLayer).add(new EditImg(FlxG.mouse.x, FlxG.mouse.y,
+						s.currentThumb.path));
+				}
 			}
 		}
 		
 		if (s.currentThumb != null)
 		{
-			if (s.currentThumb.path != lastStamp)
+			if (s.currentThumb.path != lastStamp || lPanel.currentLayer != lastLayer)
 				setStamp();
 		}
 	}
@@ -81,13 +87,13 @@ class Add
 		if (s.currentThumb != null)
 		{
 			lastStamp = s.currentThumb.path;
+			lastLayer = lPanel.currentLayer;
 			
 			stamp = new FlxSprite();
 			new ImageHandler(s.currentThumb.path, stamp);
 			stamp.alpha = 0.8;
 			
-			if (lPanel.currentLayer != null)
-				l.get(lPanel.currentLayer).add(stamp);
+			l.cursorGroup.add(stamp);
 		}
 		else
 		{
@@ -99,6 +105,8 @@ class Add
 	{
 		if (stamp != null)
 		{
+			l.cursorGroup.remove(stamp, true);
+			
 			stamp.kill();
 			stamp.destroy();
 		}
