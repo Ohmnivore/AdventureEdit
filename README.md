@@ -10,10 +10,9 @@ in an extremely unpolished state (i.e. buggy, with ugly and sometimes non-intuit
 start polishing this project, but it will only be in a few months.
 
 TODO:
-* Level load from XML
-* Popup to edit level values
 * Relative paths for saving image paths
-* Remove tool
+* Move camera when holding spacebar
 * Select tool
+* Remove tool
 * Move tools
 * Unsaved content notifiers

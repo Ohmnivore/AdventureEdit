@@ -7,6 +7,7 @@ import flixel.addons.ui.FlxUIGroup;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUITabMenu;
 import flixel.FlxG;
+import haxe.io.Path;
 import openfl.geom.Rectangle;
 import save.Cookies;
 import save.Level;
@@ -17,6 +18,7 @@ import ui.panels.LayerPanel;
 import ui.panels.ToolPanel;
 import ui.select.List;
 import ui.SimpleList;
+import ui.StatusBar;
 import ui.ValueList;
 import ui.tools.Add;
 
@@ -33,11 +35,13 @@ class Main extends FlxUIState
 	private var layers:LayerGroup;
 	private var layerPanel:LayerPanel;
 	private var tools:ToolPanel;
+	private var status:StatusBar;
 	
 	private var addTool:Add;
 	private var doEdit:Bool = true;
 	
 	private static var opened:Bool = false;
+	private static var lvlOpened:Bool = false;
 	
 	private var lvlPath:String;
 	
@@ -79,6 +83,9 @@ class Main extends FlxUIState
 			select = new List(0, FlxG.height - 68, FlxG.width);
 			layerPanel = new LayerPanel(4, 32, Reg.project.layers);
 			tools = new ToolPanel(FlxG.width - 92, 32);
+			status = new StatusBar(6);
+			add(status);
+			status.projectName = Reg.project.name;
 			
 			back.add(layers);
 			back.add(new FlxUI9SliceSprite(0, FlxG.height - 72, null, new Rectangle(0, 0, FlxG.width, 72)));
@@ -90,6 +97,16 @@ class Main extends FlxUIState
 			
 			if (Reg.level == null)
 			{
+				if (!lvlOpened)
+				{
+					var prevLvlPath:String = Cookies.get("prevLevel");
+					if (Cookies.isValidPath(prevLvlPath))
+					{
+						lvlPath = prevLvlPath;
+					}
+					lvlOpened = true;
+				}
+				
 				var content:String = null;
 				if (lvlPath != null)
 				{
@@ -97,8 +114,8 @@ class Main extends FlxUIState
 					if (StringTools.trim(content) == "")
 						content = null;
 				}
-				
 				Reg.level = new Level(layers, Reg.project, lvlPath, content);
+				setStatusLvl();
 			}
 		}
 		
@@ -122,6 +139,16 @@ class Main extends FlxUIState
 		Cookies.set("prevProject", P);
 		var newState:EditProject = new EditProject(P, true);
 		FlxG.switchState(newState);
+	}
+	
+	private function setStatusLvl():Void
+	{
+		if (Reg.level.path == null)
+			status.lvlName = "UnnamedLvl";
+		else
+		{
+			status.lvlName = Path.withoutDirectory(Reg.level.path);
+		}
 	}
 	
 	private function handleGeneral(ID:String):Void
@@ -164,7 +191,7 @@ class Main extends FlxUIState
 		{
 			if (ID == "lvlprop")
 			{
-				
+				openSubState(new EditValues());
 			}
 			else if (ID == "newlvl")
 			{
@@ -175,11 +202,11 @@ class Main extends FlxUIState
 			{
 				Reg.level = null;
 				var path:String = Base.openFile();
+				Cookies.set("prevLevel", path);
 				FlxG.switchState(new Main(path));
 			}
 			else if (ID == "savelvl")
 			{
-				trace(Reg.level.path);
 				if (Reg.level.path != null)
 					File.saveContent(Reg.level.path, Reg.level.getXML().toString());
 			}

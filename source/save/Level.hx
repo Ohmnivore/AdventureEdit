@@ -1,6 +1,7 @@
 package save;
 import ui.edit.EditImg;
 import ui.LayerGroup;
+import haxe.xml.Fast;
 
 /**
  * ...
@@ -25,6 +26,31 @@ class Level
 		for (v in project.levelValues.keys())
 		{
 			values.set(v, project.levelValues.get(v));
+		}
+		
+		if (XML != null && StringTools.trim(XML) != "")
+		{
+			var xx:Xml = Xml.parse(XML).firstElement();
+			var x:Fast = new Fast(xx);
+			
+			for (v in xx.attributes())
+			{
+				values.set(v, xx.get(v));
+			}
+			
+			for (l in x.elements)
+			{
+				var layer:ShyGroup = layers.get(l.name);
+				
+				for (s in l.elements)
+				{
+					if (s.name == "img" && layer != null)
+					{
+						layer.add(new EditImg(Std.parseFloat(s.att.x), Std.parseFloat(s.att.y),
+							s.att.path));
+					}
+				}
+			}
 		}
 	}
 	
