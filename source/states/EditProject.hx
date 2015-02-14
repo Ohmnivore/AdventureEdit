@@ -138,7 +138,6 @@ class EditProject extends FlxUIState
 		//TODO: entities
 		
 		var toSave:Xml = p.getXML();
-		trace(toSave);
 		File.saveContent(path, toSave.toString());
 		FlxG.switchState(new Main());
 	}

@@ -20,6 +20,8 @@ class Level
 		project = P;
 		path = Path;
 		
+		values = new Map<String, String>();
+		
 		for (v in project.levelValues.keys())
 		{
 			values.set(v, project.levelValues.get(v));

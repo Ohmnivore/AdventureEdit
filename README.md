@@ -10,9 +10,10 @@ in an extremely unpolished state (i.e. buggy, with ugly and sometimes non-intuit
 start polishing this project, but it will only be in a few months.
 
 TODO:
-* Level save class
+* Level load from XML
+* Popup to edit level values
 * Relative paths for saving image paths
-* Add tool
 * Remove tool
 * Select tool
-* Move tool
+* Move tools
+* Unsaved content notifiers

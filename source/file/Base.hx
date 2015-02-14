@@ -52,4 +52,10 @@ class Base
 		var paths:Array<String> = Dialogs.openFile("Open Level", "", filterFile);
 		return paths[0];
 	}
+	public static function saveFile():String
+	{
+		var path:String = Dialogs.saveFile("Save File", "", INIT_DIR, filterFile);
+		File.saveContent(path, "");
+		return path;
+	}
 }

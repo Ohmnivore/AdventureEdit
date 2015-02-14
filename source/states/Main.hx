@@ -88,11 +88,15 @@ class Main extends FlxUIState
 			
 			addTool = new Add(layerPanel, layers, select);
 			
-			if (Reg.level == null && lvlPath != null)
+			if (Reg.level == null)
 			{
-				var content:String = File.getContent(lvlPath);
-				if (StringTools.trim(content) == "")
-					content = null;
+				var content:String = null;
+				if (lvlPath != null)
+				{
+					content = File.getContent(lvlPath);
+					if (StringTools.trim(content) == "")
+						content = null;
+				}
 				
 				Reg.level = new Level(layers, Reg.project, lvlPath, content);
 			}
@@ -156,7 +160,7 @@ class Main extends FlxUIState
 	
 	private function handleLvl(ID:String):Void
 	{
-		if (Reg.project != null)
+		if (Reg.project != null && Reg.level != null)
 		{
 			if (ID == "lvlprop")
 			{
@@ -169,15 +173,20 @@ class Main extends FlxUIState
 			}
 			else if (ID == "openlvl")
 			{
-				
+				Reg.level = null;
+				var path:String = Base.openFile();
+				FlxG.switchState(new Main(path));
 			}
 			else if (ID == "savelvl")
 			{
-				
+				trace(Reg.level.path);
+				if (Reg.level.path != null)
+					File.saveContent(Reg.level.path, Reg.level.getXML().toString());
 			}
 			else if (ID == "savelvlas")
 			{
-				
+				Reg.level.path = Base.saveFile();
+				File.saveContent(Reg.level.path, Reg.level.getXML().toString());
 			}
 			else if (ID == "closelvl")
 			{
