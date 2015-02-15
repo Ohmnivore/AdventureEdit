@@ -11,7 +11,6 @@ start polishing this project, but it will only be in a few months.
 
 TODO:
 * Relative paths for saving image paths
-* Move camera when holding spacebar
 * Select tool
 * Remove tool
 * Move tools

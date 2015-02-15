@@ -19,6 +19,7 @@ import ui.panels.ToolPanel;
 import ui.select.List;
 import ui.SimpleList;
 import ui.StatusBar;
+import ui.tools.Camera;
 import ui.ValueList;
 import ui.tools.Add;
 
@@ -38,6 +39,7 @@ class Main extends FlxUIState
 	private var status:StatusBar;
 	
 	private var addTool:Add;
+	private var cameraTool:Camera;
 	private var doEdit:Bool = true;
 	
 	private static var opened:Bool = false;
@@ -94,6 +96,7 @@ class Main extends FlxUIState
 			back.add(tools);
 			
 			addTool = new Add(layerPanel, layers, select);
+			cameraTool = new Camera();
 			
 			if (Reg.level == null)
 			{
@@ -117,6 +120,15 @@ class Main extends FlxUIState
 				Reg.level = new Level(layers, Reg.project, lvlPath, content);
 				setStatusLvl();
 			}
+			
+			_ui.scrollFactor.set();
+			back.scrollFactor.set();
+			layers.scrollFactor.set(1.0, 1.0);
+			menuProj.scrollFactor.set();
+			select.scrollFactor.set();
+			layerPanel.scrollFactor.set();
+			tools.scrollFactor.set();
+			status.scrollFactor.set();
 		}
 		
 		if (!opened)
@@ -230,6 +242,7 @@ class Main extends FlxUIState
 		if (Reg.project != null && doEdit && FlxG.mouse.screenY < FlxG.height - 72)
 		{
 			addTool.update();
+			cameraTool.update();
 		}
 		
 		doEdit = true;
