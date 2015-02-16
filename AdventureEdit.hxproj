@@ -15,6 +15,7 @@
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
+    <class path="C:\HaxeToolkit\haxe\lib\crashdumper\git" />
     <class path="C:\HaxeToolkit\haxe\lib\systools\1,1,0" />
     <class path="C:\HaxeToolkit\haxe\lib\flixel-addons\git" />
     <class path="C:\HaxeToolkit\haxe\lib\flixel-ui\git" />
@@ -27,7 +28,7 @@
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="systools=1.1.0&#xA;flixel-addons=1.1.0&#xA;flixel-ui=1.0.2&#xA;openfl=2.2.3&#xA;flixel=3.3.6&#xA;lime=2.0.5&#xA;FLX_NO_GAMEPAD&#xA;tools=2.0.5&#xA;lime-legacy&#xA;FLX_NO_DEBUG&#xA;no-compilation&#xA;FLX_NO_SOUND_SYSTEM&#xA;native&#xA;FLX_NO_TOUCH&#xA;lime-native&#xA;openfl-native&#xA;FLX_NO_SOUND_TRAY&#xA;windows&#xA;desktop" />
+    <option directives="crashdumper=0.0.1&#xA;systools=1.1.0&#xA;flixel-addons=1.1.0&#xA;flixel-ui=1.0.2&#xA;openfl=2.2.3&#xA;flixel=3.3.6&#xA;lime=2.0.5&#xA;network-sandbox&#xA;FLX_NO_GAMEPAD&#xA;lime-legacy&#xA;FLX_NO_SOUND_SYSTEM&#xA;native&#xA;openfl-native&#xA;tools=2.0.5&#xA;crashdumper&#xA;HXCPP_CHECK_POINTER&#xA;FLX_NO_DEBUG&#xA;HXCPP_STACK_TRACE&#xA;no-compilation&#xA;HXCPP_STACK_LINE&#xA;FLX_NO_TOUCH&#xA;lime-native&#xA;FLX_NO_SOUND_TRAY&#xA;safeMode&#xA;windows&#xA;desktop" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />

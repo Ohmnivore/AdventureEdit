@@ -20,6 +20,14 @@ class EditValues extends FlxUIPopup
 	private var apply:FlxUIButton;
 	private var cancel:FlxUIButton;
 	
+	private var m:Main;
+	
+	public function new(M:Main)
+	{
+		super();
+		m = M;
+	}
+	
 	override public function create():Void 
 	{
 		super.create();
@@ -31,6 +39,8 @@ class EditValues extends FlxUIPopup
 		list = new SimpleValueList(back.x + 4, back.y + 4);
 		add(list);
 		
+		list.addNew("width", cast Reg.level.width);
+		list.addNew("height", cast Reg.level.height);
 		for (v in Reg.level.values.keys())
 		{
 			list.addNew(v, Reg.level.values.get(v));
@@ -44,6 +54,8 @@ class EditValues extends FlxUIPopup
 		cancel.y = back.y + back.height - cancel.height - 4;
 		cancel.x = back.x + back.width - cancel.width - 4;
 		add(cancel);
+		
+		_ui.scrollFactor.set();
 	}
 	
 	public function saveClose():Void
@@ -52,8 +64,14 @@ class EditValues extends FlxUIPopup
 		
 		for (v in list.defs.keys())
 		{
-			Reg.level.values.set(v, list.defs.get(v));
+			if (v == "width")
+				Reg.level.width = Std.parseInt(list.defs.get(v));
+			else if (v == "height")
+				Reg.level.height = Std.parseInt(list.defs.get(v));
+			else
+				Reg.level.values.set(v, list.defs.get(v));
 		}
+		m.setLevelSize();
 		
 		close();
 	}

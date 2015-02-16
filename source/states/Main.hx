@@ -6,13 +6,18 @@ import flixel.addons.ui.FlxUIDropDownMenu;
 import flixel.addons.ui.FlxUIGroup;
 import flixel.addons.ui.FlxUIState;
 import flixel.addons.ui.FlxUITabMenu;
+import flixel.FlxCamera;
 import flixel.FlxG;
+import flixel.FlxSprite;
+import flixel.group.FlxGroup;
+import flixel.util.FlxSpriteUtil;
 import haxe.io.Path;
 import openfl.geom.Rectangle;
 import save.Cookies;
 import save.Level;
 import sys.io.File;
 import ui.EntList;
+import ui.InfiniteGrid;
 import ui.LayerGroup;
 import ui.panels.LayerPanel;
 import ui.panels.ToolPanel;
@@ -20,8 +25,14 @@ import ui.select.List;
 import ui.SimpleList;
 import ui.StatusBar;
 import ui.tools.Camera;
+import ui.tools.Move;
+import ui.tools.Remove;
+import ui.tools.Select;
+import ui.tools.Tool;
+import ui.tools.Zoom;
 import ui.ValueList;
 import ui.tools.Add;
+import flixel.addons.display.FlxGridOverlay;
 
 /**
  * ...
@@ -38,9 +49,20 @@ class Main extends FlxUIState
 	private var tools:ToolPanel;
 	private var status:StatusBar;
 	
+	private var currentTool:Tool;
+	private var currentToolName:String;
 	private var addTool:Add;
+	private var removeTool:Remove;
+	private var selectTool:Select;
+	private var moveTool:Move;
 	private var cameraTool:Camera;
+	private var zoomTool:Zoom;
 	private var doEdit:Bool = true;
+	
+	private var grid:InfiniteGrid;
+	private var background:ShyGroup;
+	
+	private var backCam:FlxCamera;
 	
 	private static var opened:Bool = false;
 	private static var lvlOpened:Bool = false;
@@ -69,17 +91,34 @@ class Main extends FlxUIState
 		_xml_id = "main";
 		super.create();
 		
+		backCam = new FlxCamera();
+		//FlxG.cameras.add(backCam);
+		Reg.backCam = backCam;
+		backCam.bgColor = 0x00000000;
+		FlxG.camera.bgColor = 0x00000000;
+		//FlxG.cameras.list.reverse();
+		
+		FlxG.cameras.reset(backCam);
+		var topCam:FlxCamera = new FlxCamera();
+		topCam.bgColor = 0x00000000;
+		FlxG.cameras.add(topCam);
+		FlxG.camera = topCam;
+		
 		var menuGen:FlxUIDropDownMenu = cast _ui.getAsset("general");
 		menuGen.callback = handleGeneral;
 		menuProj = cast _ui.getAsset("project");
 		menuProj.callback = handleProject;
 		var menuLvl:FlxUIDropDownMenu = cast _ui.getAsset("level");
 		menuLvl.callback = handleLvl;
+		var menuView:FlxUIDropDownMenu = cast _ui.getAsset("view");
+		menuView.callback = handleView;
 		back = _ui.getGroup("background");
+		background = new ShyGroup();
+		back.add(background);
 		
 		if (Reg.project != null)
 		{
-			FlxG.camera.bgColor = Std.parseInt(Reg.project.bgColor) + 0xff000000;
+			//FlxG.camera.bgColor = Std.parseInt(Reg.project.bgColor) + 0xff000000;
 			
 			layers = new LayerGroup(Reg.project.layers);
 			select = new List(0, FlxG.height - 68, FlxG.width);
@@ -94,9 +133,6 @@ class Main extends FlxUIState
 			back.add(select);
 			back.add(layerPanel);
 			back.add(tools);
-			
-			addTool = new Add(layerPanel, layers, select);
-			cameraTool = new Camera();
 			
 			if (Reg.level == null)
 			{
@@ -119,7 +155,15 @@ class Main extends FlxUIState
 				}
 				Reg.level = new Level(layers, Reg.project, lvlPath, content);
 				setStatusLvl();
+				setLevelSize();
 			}
+			
+			addTool = new Add(layerPanel, layers, select);
+			removeTool = new Remove(layers, layerPanel);
+			selectTool = new Select(layers, layerPanel);
+			moveTool = new Move();
+			cameraTool = new Camera();
+			zoomTool = new Zoom();
 			
 			_ui.scrollFactor.set();
 			back.scrollFactor.set();
@@ -129,6 +173,7 @@ class Main extends FlxUIState
 			layerPanel.scrollFactor.set();
 			tools.scrollFactor.set();
 			status.scrollFactor.set();
+			background.scrollFactor.set(1.0, 1.0);
 		}
 		
 		if (!opened)
@@ -141,6 +186,37 @@ class Main extends FlxUIState
 			
 			opened = true;
 		}
+		
+		_ui.cameras = [FlxG.camera];
+		if (status != null)
+			status.cameras = [FlxG.camera];
+		if (grid != null)
+		{
+			background.cameras = [Reg.backCam];
+			grid.cameras = [Reg.backCam];
+		}
+	}
+	
+	public function setLevelSize():Void
+	{
+		if (grid != null)
+		{
+			layers.cursorGroup.remove(grid, true);
+			grid.kill();
+			grid.destroy();
+		}
+		grid = new InfiniteGrid(64, Reg.level.width, Reg.level.height);
+		layers.cursorGroup.add(grid);
+		FlxSpriteUtil.screenCenter(grid);
+		
+		background.clear();
+		var b:FlxSprite = new FlxSprite();
+		b.makeGraphic(Reg.level.width, Reg.level.height, Std.parseInt(Reg.project.bgColor) + 0xff000000, true);
+		background.add(b);
+		FlxSpriteUtil.screenCenter(b);
+		
+		grid.cameras = [backCam];
+		b.cameras = [backCam];
 	}
 	
 	private function openProject(P:String = null):Void
@@ -203,7 +279,7 @@ class Main extends FlxUIState
 		{
 			if (ID == "lvlprop")
 			{
-				openSubState(new EditValues());
+				openSubState(new EditValues(this));
 			}
 			else if (ID == "newlvl")
 			{
@@ -235,16 +311,65 @@ class Main extends FlxUIState
 		}
 	}
 	
+	private function handleView(ID:String):Void
+	{
+		if (ID == "centerview")
+		{
+			Reg.backCam.scroll.x = 0;
+			Reg.backCam.scroll.y = 0;
+		}
+		else if (ID == "grid")
+		{
+			grid.visible = !grid.visible;
+		}
+		else if (ID == "zoomin")
+		{
+			zoomTool.zoomIn();
+		}
+		else if (ID == "zoomout")
+		{
+			zoomTool.zoomOut();
+		}
+	}
+	
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
+		layers.cameras = [Reg.backCam];
 		
 		if (Reg.project != null && doEdit && FlxG.mouse.screenY < FlxG.height - 72)
 		{
-			addTool.update();
 			cameraTool.update();
+			if (currentTool != null)
+				currentTool.update();
+			
+			if (tools.currentTool != currentToolName)
+			{
+				currentToolName = tools.currentTool;
+				
+				hideTools();
+				
+				if (currentToolName == "Add")
+					currentTool = addTool;
+				else if (currentToolName == "Remove")
+					currentTool = removeTool;
+				else if (currentToolName == "Select")
+					currentTool = selectTool;
+				else if (currentToolName == "Move")
+					currentTool = moveTool;
+				
+				currentTool.opened = true;
+			}
 		}
 		
 		doEdit = true;
+	}
+	
+	private function hideTools():Void
+	{
+		addTool.opened = false;
+		removeTool.opened = false;
+		selectTool.opened = false;
+		moveTool.opened = false;
 	}
 }

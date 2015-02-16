@@ -11,29 +11,11 @@ import ui.select.List;
  * ...
  * @author Ohmnivore
  */
-class Add
+class Add extends Tool
 {
 	private var lPanel :LayerPanel;
 	private var l:LayerGroup;
 	private var s:List;
-	
-	private var _opened:Bool = false;
-	public var opened(get, set):Bool;
-	public function get_opened():Bool
-	{
-		return _opened;
-	}
-	public function set_opened(V:Bool):Bool
-	{
-		if (!_opened && V)
-			show();
-		if (_opened && !V)
-			hide();
-		
-		_opened = V;
-		
-		return _opened;
-	}
 	
 	private var stamp:FlxSprite;
 	private var lastStamp:String;
@@ -41,22 +23,23 @@ class Add
 	
 	public function new(L:LayerPanel, Layers:LayerGroup, Select:List) 
 	{
+		super();
 		lPanel = L;
 		l = Layers;
 		s = Select;
 	}
 	
-	private function show():Void
+	override private function show():Void
 	{
 		
 	}
 	
-	private function hide():Void
+	override private function hide():Void
 	{
 		clearStamp();
 	}
 	
-	public function update():Void
+	override public function update():Void
 	{
 		if (stamp != null)
 		{
@@ -109,6 +92,9 @@ class Add
 			
 			stamp.kill();
 			stamp.destroy();
+			
+			lastStamp = null;
+			lastLayer = null;
 		}
 	}
 }

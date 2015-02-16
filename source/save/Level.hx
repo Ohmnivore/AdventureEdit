@@ -10,6 +10,8 @@ import haxe.xml.Fast;
 class Level
 {
 	public var path:String;
+	public var width:Int = 640;
+	public var height:Int = 480;
 	public var values:Map<String, String>;
 	
 	private var layers:LayerGroup;
@@ -22,7 +24,6 @@ class Level
 		path = Path;
 		
 		values = new Map<String, String>();
-		
 		for (v in project.levelValues.keys())
 		{
 			values.set(v, project.levelValues.get(v));
@@ -35,7 +36,13 @@ class Level
 			
 			for (v in xx.attributes())
 			{
-				values.set(v, xx.get(v));
+				if (v != "width" && v != "height")
+					values.set(v, xx.get(v));
+			}
+			if (xx.get("width") != null && xx.get("height") != null)
+			{
+				width = Std.parseInt(xx.get("width"));
+				height = Std.parseInt(xx.get("height"));
 			}
 			
 			for (l in x.elements)
@@ -57,7 +64,8 @@ class Level
 	public function getXML():Xml
 	{
 		var xml:Xml = Xml.createElement("level");
-		
+		xml.set("width", cast width);
+		xml.set("height", cast height);
 		for (v in values.keys())
 		{
 			xml.set(v, values.get(v));

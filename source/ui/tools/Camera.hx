@@ -1,4 +1,5 @@
 package ui.tools;
+import flixel.FlxCamera;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
 
@@ -9,10 +10,12 @@ import flixel.math.FlxPoint;
 class Camera
 {
 	private var old:FlxPoint;
+	private var cam:FlxCamera;
 	
 	public function new()
 	{
 		old = new FlxPoint();
+		cam = Reg.backCam;
 	}
 	
 	public function update()
@@ -25,8 +28,8 @@ class Camera
 		}
 		if (FlxG.keys.pressed.SPACE)
 		{
-			FlxG.camera.scroll.x += old.x - FlxG.mouse.screenX;
-			FlxG.camera.scroll.y += old.y - FlxG.mouse.screenY;
+			cam.scroll.x += old.x - FlxG.mouse.screenX;
+			cam.scroll.y += old.y - FlxG.mouse.screenY;
 			
 			setOld();
 		}
