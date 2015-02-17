@@ -1,4 +1,5 @@
 package ui.tools;
+import flixel.math.FlxPoint;
 import ui.panels.LayerPanel;
 import flixel.FlxSprite;
 import flixel.FlxG;
@@ -14,6 +15,8 @@ class Remove extends Tool
 	private var lPanel:LayerPanel;
 	private var rect:SelectRect;
 	
+	private var cur:FlxPoint;
+	
 	public function new(L:LayerGroup, LPanel:LayerPanel) 
 	{
 		super();
@@ -23,6 +26,7 @@ class Remove extends Tool
 		rect = new SelectRect(0xffff0000);
 		layers.cursorGroup.add(rect);
 		rect.visible = false;
+		cur = new FlxPoint();
 	}
 	
 	override function show():Void 
@@ -37,14 +41,15 @@ class Remove extends Tool
 	
 	override public function update():Void 
 	{
+		FlxG.mouse.getWorldPosition(Reg.backCam, cur);
 		if (FlxG.mouse.justPressed)
 		{
 			rect.visible = true;
-			rect.startPoint.set(FlxG.mouse.x, FlxG.mouse.y);
+			rect.startPoint.set(cur.x, cur.y);
 		}
 		if (FlxG.mouse.pressed)
 		{
-			rect.endPoint.set(FlxG.mouse.x, FlxG.mouse.y);
+			rect.endPoint.set(cur.x, cur.y);
 		}
 		if (FlxG.mouse.justReleased)
 		{

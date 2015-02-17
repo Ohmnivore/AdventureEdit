@@ -48,7 +48,7 @@ class LayerGroup extends ShyGroup
 			
 			for (s in layer.members)
 			{
-				if (Std.is(s, EditImg))
+				if (Std.is(s, EditImg) && s.alive)
 				{
 					var img:EditImg = cast s;
 					img.selected = Selected;

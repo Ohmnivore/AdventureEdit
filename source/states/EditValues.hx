@@ -6,6 +6,7 @@ import flixel.addons.ui.interfaces.IFlxUIWidget;
 import flixel.FlxG;
 import flixel.util.FlxSpriteUtil;
 import openfl.geom.Rectangle;
+import ui.AssetsGr;
 import ui.SimpleValueList;
 
 /**
@@ -32,7 +33,7 @@ class EditValues extends FlxUIPopup
 	{
 		super.create();
 		
-		back = new FlxUI9SliceSprite(0, 0, null, new Rectangle(0, 0, FlxG.width / 2.0, FlxG.height * 0.75));
+		back = new FlxUI9SliceSprite(0, 0, AssetsGr.CHROME, new Rectangle(0, 0, FlxG.width / 2.0, FlxG.height * 0.75));
 		FlxSpriteUtil.screenCenter(back);
 		add(back);
 		
@@ -48,14 +49,21 @@ class EditValues extends FlxUIPopup
 		
 		apply = new FlxUIButton(back.x + 4, 0, "Apply", saveClose);
 		apply.y = back.y + back.height - apply.height - 4;
+		AssetsGr.setBtnGraphic(apply);
 		add(apply);
 		
 		cancel = new FlxUIButton(0, 0, "Cancel", close);
 		cancel.y = back.y + back.height - cancel.height - 4;
 		cancel.x = back.x + back.width - cancel.width - 4;
+		AssetsGr.setBtnGraphic(cancel);
 		add(cancel);
 		
 		_ui.scrollFactor.set();
+		_ui.cameras = [FlxG.camera];
+		back.cameras = [FlxG.camera];
+		list.cameras = [FlxG.camera];
+		apply.cameras = [FlxG.camera];
+		cancel.cameras = [FlxG.camera];
 	}
 	
 	public function saveClose():Void

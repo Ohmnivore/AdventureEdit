@@ -19,7 +19,7 @@ class ToolPanel extends FlxUIGroup
 	{
 		super(X, Y);
 		
-		back = new FlxUI9SliceSprite(0, 0, null, new Rectangle(0, 0, 88, 176));
+		back = new FlxUI9SliceSprite(0, 0, AssetsGr.CHROME, new Rectangle(0, 0, 88, 176));
 		add(back);
 		
 		toggle(addTool("Add"));
@@ -48,9 +48,34 @@ class ToolPanel extends FlxUIGroup
 		currentTool = B.label.text;
 	}
 	
+	public function setTool(T:String):Void
+	{
+		var btn:FlxUIButton = null;
+		
+		for (s in members)
+		{
+			if (Std.is(s, FlxUIButton))
+			{
+				var b:FlxUIButton = cast s;
+				
+				if (b.label.text == T)
+				{
+					btn = b;
+					break;
+				}
+			}
+		}
+		
+		if (btn != null)
+		{
+			toggle(btn);
+		}
+	}
+	
 	private function addTool(Name:String):FlxUIButton
 	{
 		var btn:FlxUIButton = new FlxUIButton(4, 4, Name);
+		AssetsGr.setBtnGraphic(btn);
 		btn.onUp.callback = function() { toggle(btn); };
 		btn.has_toggle = true;
 		btn.toggled = false;

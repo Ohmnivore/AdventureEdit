@@ -1,5 +1,6 @@
 package;
 
+import flixel.addons.display.FlxZoomCamera;
 import flixel.FlxCamera;
 import flixel.util.FlxSave;
 import save.Level;
@@ -16,5 +17,5 @@ class Reg
 	public static var project:Project;
 	public static var level:Level;
 	public static var selected:Array<EditImg> = [];
-	public static var backCam:FlxCamera;
+	public static var backCam:FlxZoomCamera;
 }

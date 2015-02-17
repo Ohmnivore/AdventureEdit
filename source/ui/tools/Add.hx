@@ -2,6 +2,7 @@ package ui.tools;
 import file.ImageHandler;
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
 import ui.edit.EditImg;
 import ui.LayerGroup;
 import ui.panels.LayerPanel;
@@ -21,12 +22,15 @@ class Add extends Tool
 	private var lastStamp:String;
 	private var lastLayer:String;
 	
+	private var cur:FlxPoint;
+	
 	public function new(L:LayerPanel, Layers:LayerGroup, Select:List) 
 	{
 		super();
 		lPanel = L;
 		l = Layers;
 		s = Select;
+		cur = new FlxPoint();
 	}
 	
 	override private function show():Void
@@ -41,16 +45,17 @@ class Add extends Tool
 	
 	override public function update():Void
 	{
+		FlxG.mouse.getWorldPosition(Reg.backCam, cur);
 		if (stamp != null)
 		{
-			stamp.x = FlxG.mouse.x;
-			stamp.y = FlxG.mouse.y;
+			stamp.x = cur.x;
+			stamp.y = cur.y;
 			
 			if (FlxG.mouse.justReleased)
 			{
 				if (lPanel.currentLayer != null && s.currentThumb != null)
 				{
-					l.get(lPanel.currentLayer).add(new EditImg(FlxG.mouse.x, FlxG.mouse.y,
+					l.get(lPanel.currentLayer).add(new EditImg(cur.x, cur.y,
 						s.currentThumb.path));
 				}
 			}

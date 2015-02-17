@@ -10,12 +10,9 @@ in an extremely unpolished state (i.e. buggy, with ugly and sometimes non-intuit
 start polishing this project, but it will only be in a few months.
 
 TODO:
-* Fix zoom out/in
 * Relative paths for saving image paths
 * Select tool
  * List of selected items
 * Unsaved content notifiers
 * Hide all other menus if no project is open
 * Hide all menus except project and menu if no level is open
-* Keboard shortcuts
-* Copy UI assets from TileSetter and FlxSpriter

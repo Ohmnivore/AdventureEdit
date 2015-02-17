@@ -16,6 +16,7 @@ class StatusBar extends FlxText
 	public function new(Y:Float) 
 	{
 		super(0, Y);
+		AssetsGr.setTextStyle(this);
 	}
 	
 	override public function update(elapsed:Float):Void 

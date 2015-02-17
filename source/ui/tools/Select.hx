@@ -19,6 +19,8 @@ class Select extends Tool
 	private var lPanel:LayerPanel;
 	private var rect:SelectRect;
 	
+	private var cur:FlxPoint;
+	
 	public function new(L:LayerGroup, LPanel:LayerPanel) 
 	{
 		super();
@@ -28,6 +30,7 @@ class Select extends Tool
 		rect = new SelectRect(0xff00D0FF);
 		layers.cursorGroup.add(rect);
 		rect.visible = false;
+		cur = new FlxPoint();
 	}
 	
 	override function show():Void 
@@ -42,14 +45,15 @@ class Select extends Tool
 	
 	override public function update():Void 
 	{
+		FlxG.mouse.getWorldPosition(Reg.backCam, cur);
 		if (FlxG.mouse.justPressed)
 		{
 			rect.visible = true;
-			rect.startPoint.set(FlxG.mouse.x, FlxG.mouse.y);
+			rect.startPoint.set(cur.x, cur.y);
 		}
 		if (FlxG.mouse.pressed)
 		{
-			rect.endPoint.set(FlxG.mouse.x, FlxG.mouse.y);
+			rect.endPoint.set(cur.x, cur.y);
 		}
 		if (FlxG.mouse.justReleased)
 		{

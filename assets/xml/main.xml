@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<data>  
+<data>
+	<include id="global"/>
+	
 	<group id="background">
 	</group>
 	
-    <chrome id="topBar" center_x="true" y="0" width="100%" height="28"/>
+    <chrome id="topBar" use_def="mychrome" center_x="true" y="0" width="100%" height="28"/>
 	
 	<dropdown id="general" x="4" y="4">
 		<anchor x="topBar.left" y="topBar.top" x-flush="left" y-flush="top"/>

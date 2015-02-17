@@ -24,6 +24,8 @@ class List extends FlxUIList
 		if (!Cookies.isValidPath(prevPath))
 			prevPath = Cookies.desktopPath();
 		walk(prevPath);
+		
+		AssetsGr.setListStyle(this);
 	}
 	
 	override public function update(elapsed:Float):Void 
@@ -53,6 +55,7 @@ class List extends FlxUIList
 		var up:FlxUIButton = new FlxUIButton(0, 0, "..", function() {
 			walk(Path.directory(P));
 		});
+		AssetsGr.setBtnGraphic(up);
 		add(up);
 		
 		for (item in FileSystem.readDirectory(P))
@@ -64,6 +67,7 @@ class List extends FlxUIList
 				var btn:FlxUIButton = new FlxUIButton(0, 0, cutName(item), function() {
 					walk(fullPath);
 				});
+				AssetsGr.setBtnGraphic(btn);
 				
 				add(btn);
 			}

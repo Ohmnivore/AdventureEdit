@@ -26,7 +26,7 @@ class SimpleValueList extends FlxUIGroup
 		super(X, Y);
 		
 		list = new FlxUIList(0, 20, null, 80, 240, "<X> more...");
-		
+		AssetsGr.setListStyle(list);
 		add(list);
 		
 		//Edit UI
@@ -65,6 +65,7 @@ class SimpleValueList extends FlxUIGroup
 		unToggle();
 		
 		var newBtn:FlxUIButton = new FlxUIButton(0, 0, Name);
+		AssetsGr.setBtnGraphic(newBtn);
 		newBtn.has_toggle = true;
 		newBtn.toggled = true;
 		newBtn.onUp.callback = function() { edit(newBtn); };

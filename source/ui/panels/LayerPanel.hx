@@ -20,7 +20,7 @@ class LayerPanel extends FlxUIGroup
 	{
 		super(X, Y);
 		
-		back = new FlxUI9SliceSprite(0, 0, null, new Rectangle(0, 0, 88, 176));
+		back = new FlxUI9SliceSprite(0, 0, AssetsGr.CHROME, new Rectangle(0, 0, 88, 176));
 		add(back);
 		
 		for (l in Layers)
@@ -52,6 +52,7 @@ class LayerPanel extends FlxUIGroup
 	private function addLayer(Name:String):Void
 	{
 		var btn:FlxUIButton = new FlxUIButton(4, 4, Name);
+		AssetsGr.setBtnGraphic(btn);
 		btn.onUp.callback = function() { toggle(btn); };
 		btn.has_toggle = true;
 		add(btn);
