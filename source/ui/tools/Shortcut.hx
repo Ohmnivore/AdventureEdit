@@ -36,7 +36,7 @@ class Shortcut
 		if (FlxG.mouse.wheel < 0)
 			m.handleView("zoomout");
 		
-		if (FlxG.keys.justPressed.CONTROL)
+		if (FlxG.keys.pressed.CONTROL)
 		{
 			//Lvl
 			if (FlxG.keys.justPressed.L)
@@ -52,27 +52,27 @@ class Shortcut
 			
 			//Edit
 			else if (FlxG.keys.justPressed.Z)
-				m.handleLvl("undo");
+				m.handleEdit("undo");
 			else if (FlxG.keys.justPressed.Y)
-				m.handleLvl("redo");
+				m.handleEdit("redo");
 			else if (FlxG.keys.justPressed.X)
-				m.handleLvl("cut");
+				m.handleEdit("cut");
 			else if (FlxG.keys.justPressed.C)
-				m.handleLvl("copy");
+				m.handleEdit("copy");
 			else if (FlxG.keys.justPressed.V)
-				m.handleLvl("paste");
+				m.handleEdit("paste");
 			else if (FlxG.keys.justPressed.A)
-				m.handleLvl("selectall");
+				m.handleEdit("selectall");
 			else if (FlxG.keys.justPressed.D)
-				m.handleLvl("deselect");
+				m.handleEdit("deselect");
 			
 			//View
 			else if (FlxG.keys.justPressed.G)
 				m.handleView("grid");
-			else if (FlxG.keys.justPressed.HOME)
+			else if (FlxG.keys.justPressed.TAB)
 				m.handleView("centerview");
 		}
-		if (FlxG.keys.justPressed.SHIFT && FlxG.keys.justPressed.CONTROL)
+		if (FlxG.keys.pressed.SHIFT && FlxG.keys.pressed.CONTROL)
 		{
 			if (FlxG.keys.justPressed.S)
 				m.handleLvl("savelvlas");

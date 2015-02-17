@@ -339,11 +339,10 @@ class Main extends FlxUIState
 			{
 				for (s in Reg.selected)
 				{
-					Reg.selected.remove(s);
-					
 					s.kill();
 					s.destroy();
 				}
+				Reg.selected = [];
 			}
 			else if (ID == "selectall")
 			{

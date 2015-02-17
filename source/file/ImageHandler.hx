@@ -44,7 +44,7 @@ class ImageHandler
 	
 	public function loaderToFlxSprite(L:LoaderInfo, S:FlxSprite):Void
 	{
-		S.makeGraphic(Std.int(L.content.width), Std.int(L.content.height), 0xffffffff, true);
+		S.makeGraphic(Std.int(L.content.width), Std.int(L.content.height), 0x00000000, true);
 		var temp:BitmapData = S.pixels;
 		temp.draw(L.content);
 		
