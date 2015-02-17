@@ -31,6 +31,7 @@ class Move extends Tool
 				s.y -= old.y - FlxG.mouse.screenY;
 			}
 			
+			Reg.level.saved = false;
 			setOld();
 		}
 	}

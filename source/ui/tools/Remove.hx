@@ -64,6 +64,8 @@ class Remove extends Tool
 				selected.kill();
 				selected.destroy();
 			}
+			
+			Reg.level.saved = false;
 		}
 	}
 	

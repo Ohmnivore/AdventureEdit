@@ -57,6 +57,7 @@ class Add extends Tool
 				{
 					l.get(lPanel.currentLayer).add(new EditImg(cur.x, cur.y,
 						s.currentThumb.path));
+					Reg.level.saved = false;
 				}
 			}
 		}

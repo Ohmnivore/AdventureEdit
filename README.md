@@ -11,8 +11,11 @@ start polishing this project, but it will only be in a few months.
 
 TODO:
 * Relative paths for saving image paths
-* Select tool
- * List of selected items
-* Unsaved content notifiers
-* Hide all other menus if no project is open
-* Hide all menus except project and menu if no level is open
+* Custom fields for entities in EditProj
+* Rectangle entities
+* Layer visibility
+* Copy
+* Paste
+* Undo
+* Redo
+* Nodes

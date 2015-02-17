@@ -9,6 +9,8 @@ import haxe.xml.Fast;
  */
 class Level
 {
+	public var saved:Bool = true;
+	
 	public var path:String;
 	public var width:Int = 640;
 	public var height:Int = 480;
@@ -78,7 +80,7 @@ class Level
 			
 			for (s in layers.get(l).members)
 			{
-				if (Std.is(s, EditImg))
+				if (Std.is(s, EditImg) && s.alive)
 				{
 					var img:EditImg = cast s;
 					var sData:Xml = Xml.createElement("img");

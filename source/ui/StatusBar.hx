@@ -22,6 +22,7 @@ class StatusBar extends FlxText
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
+		lvlSaved = Reg.level.saved;
 		
 		if (projectName != null)
 		{

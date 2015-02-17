@@ -13,7 +13,9 @@ import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.group.FlxGroup;
 import flixel.util.FlxSpriteUtil;
+import haxe.Constraints.Function;
 import haxe.io.Path;
+import lime.app.Config;
 import openfl.geom.Rectangle;
 import save.Cookies;
 import save.Level;
@@ -45,10 +47,10 @@ import flixel.addons.display.FlxGridOverlay;
  */
 class Main extends FlxUIState
 {
-	private var back:FlxUIGroup;
+	public var back:FlxUIGroup;
 	private var menuProj:FlxUIDropDownMenu;
 	
-	private var select:List;
+	public var select:List;
 	private var layers:LayerGroup;
 	private var layerPanel:LayerPanel;
 	private var tools:ToolPanel;
@@ -174,7 +176,7 @@ class Main extends FlxUIState
 			shortcut = new Shortcut(this, tools);
 			addTool = new Add(layerPanel, layers, select);
 			removeTool = new Remove(layers, layerPanel);
-			selectTool = new Select(layers, layerPanel);
+			selectTool = new Select(layers, layerPanel, this);
 			moveTool = new Move();
 			cameraTool = new Camera();
 			zoomTool = new Zoom(this);
@@ -208,6 +210,26 @@ class Main extends FlxUIState
 		{
 			background.cameras = [Reg.backCam];
 			grid.cameras = [Reg.backCam];
+		}
+		
+		if (Reg.project == null)
+		{
+			menuLvl.visible = false;
+			menuLvl.active = false;
+			
+			menuEdit.visible = false;
+			menuEdit.active = false;
+			
+			menuView.visible = false;
+			menuView.active = false;
+		}
+		if (Reg.level == null)
+		{
+			menuEdit.visible = false;
+			menuEdit.active = false;
+			
+			menuView.visible = false;
+			menuView.active = false;
 		}
 	}
 	
@@ -265,26 +287,68 @@ class Main extends FlxUIState
 		}
 	}
 	
+	private function isUnsaved():Bool
+	{
+		if (Reg.level != null)
+		{
+			if (!Reg.level.saved)
+				return true;
+		}
+		
+		return false;
+	}
+	
 	public function handleProject(ID:String):Void
 	{
 		if (ID == "newproj")
 		{
-			Reg.project = null;
-			FlxG.switchState(new EditProject(Base.newProject()));
+			if (isUnsaved())
+				openSubState(new Confirm(newProject));
+			else
+				newProject();
 		}
 		else if (ID == "openproj")
 		{
-			openProject();
+			if (isUnsaved())
+				openSubState(new Confirm(cast openProject));
+			else
+				openProject();
 		}
 		else if (ID == "editproj" && Reg.project != null)
 		{
-			FlxG.switchState(new EditProject(Reg.project.path));
+			if (isUnsaved())
+				openSubState(new Confirm(editProject));
+			else
+				editProject();
 		}
 		else if (ID == "closeproj")
 		{
-			Reg.project = null;
-			FlxG.switchState(new Main());
+			if (isUnsaved())
+			{
+				openSubState(new Confirm(closeProject));
+			}
+			else
+			{
+				closeProject();
+			}
 		}
+	}
+	
+	private function newProject():Void
+	{
+		Reg.project = null;
+		FlxG.switchState(new EditProject(Base.newProject()));
+	}
+	
+	private function editProject():Void
+	{
+		FlxG.switchState(new EditProject(Reg.project.path));
+	}
+	
+	private function closeProject():Void
+	{
+		Reg.project = null;
+		closeLvl();
 	}
 	
 	public function handleLvl(ID:String):Void
@@ -297,32 +361,60 @@ class Main extends FlxUIState
 			}
 			else if (ID == "newlvl")
 			{
-				Reg.level = null;
-				FlxG.switchState(new Main(Base.newFile()));
+				if (isUnsaved())
+					openSubState(new Confirm(newLvl));
+				else
+					newLvl();
 			}
 			else if (ID == "openlvl")
 			{
-				Reg.level = null;
-				var path:String = Base.openFile();
-				Cookies.set("prevLevel", path);
-				FlxG.switchState(new Main(path));
+				if (isUnsaved())
+					openSubState(new Confirm(openLvl));
+				else
+					openLvl();
 			}
 			else if (ID == "savelvl")
 			{
 				if (Reg.level.path != null)
+				{
 					File.saveContent(Reg.level.path, Reg.level.getXML().toString());
+					Reg.level.saved = true;
+				}
 			}
 			else if (ID == "savelvlas")
 			{
 				Reg.level.path = Base.saveFile();
 				File.saveContent(Reg.level.path, Reg.level.getXML().toString());
+				Reg.level.saved = true;
 			}
 			else if (ID == "closelvl")
 			{
-				Reg.level = null;
-				FlxG.switchState(new Main());
+				if (isUnsaved())
+					openSubState(new Confirm(closeLvl));
+				else
+					closeLvl();
 			}
 		}
+	}
+	
+	private function closeLvl():Void
+	{
+		Reg.level = null;
+		FlxG.switchState(new Main());
+	}
+	
+	private function openLvl():Void
+	{
+		Reg.level = null;
+		var path:String = Base.openFile();
+		Cookies.set("prevLevel", path);
+		FlxG.switchState(new Main(path));
+	}
+	
+	private function newLvl():Void
+	{
+		Reg.level = null;
+		FlxG.switchState(new Main(Base.newFile()));
 	}
 	
 	public function centerView():Void
@@ -343,6 +435,8 @@ class Main extends FlxUIState
 					s.destroy();
 				}
 				Reg.selected = [];
+				
+				Reg.level.saved = false;
 			}
 			else if (ID == "selectall")
 			{
@@ -394,6 +488,9 @@ class Main extends FlxUIState
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
+		
+		if (Reg.project != null && Reg.level != null)
+		{
 		layers.cameras = [Reg.backCam];
 		shortcut.update();
 		
@@ -423,6 +520,7 @@ class Main extends FlxUIState
 		}
 		
 		doEdit = true;
+		}
 	}
 	
 	private function hideTools():Void

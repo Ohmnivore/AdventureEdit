@@ -81,6 +81,8 @@ class EditValues extends FlxUIPopup
 		}
 		m.setLevelSize();
 		
+		Reg.level.saved = false;
+		
 		close();
 	}
 	

@@ -14,7 +14,7 @@ class InfiniteGrid extends FlxSprite
 		super();
 		
 		loadGraphicFromSprite(FlxGridOverlay.create(Size, Size, Width, Height,
-			false, true));
+			false, true, 0x00000000, 0xffe7e6e6));
 		alpha = 0.3;
 	}
 }

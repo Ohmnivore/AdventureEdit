@@ -5,9 +5,11 @@ import flixel.FlxSprite;
 import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.util.FlxSpriteUtil;
+import states.Main;
 import ui.edit.EditImg;
 import ui.LayerGroup;
 import ui.panels.LayerPanel;
+import ui.tools.SelectList;
 
 /**
  * ...
@@ -15,13 +17,16 @@ import ui.panels.LayerPanel;
  */
 class Select extends Tool
 {
+	public var list:SelectList;
+	
 	private var layers:LayerGroup;
 	private var lPanel:LayerPanel;
 	private var rect:SelectRect;
+	private var m:Main;
 	
 	private var cur:FlxPoint;
 	
-	public function new(L:LayerGroup, LPanel:LayerPanel) 
+	public function new(L:LayerGroup, LPanel:LayerPanel, M:Main) 
 	{
 		super();
 		
@@ -31,16 +36,32 @@ class Select extends Tool
 		layers.cursorGroup.add(rect);
 		rect.visible = false;
 		cur = new FlxPoint();
+		m = M;
+		
+		list = new SelectList(0, FlxG.height - 68, FlxG.width);
+		m.back.add(list);
+		list.visible = false;
+		list.active = false;
 	}
 	
 	override function show():Void 
 	{
 		rect.visible = true;
+		
+		list.visible = true;
+		list.active = true;
+		m.select.visible = false;
+		m.select.active = false;
 	}
 	
 	override function hide():Void 
 	{
 		rect.visible = false;
+		
+		list.visible = false;
+		list.active = false;
+		m.select.visible = true;
+		m.select.active = true;
 	}
 	
 	override public function update():Void 
@@ -66,6 +87,8 @@ class Select extends Tool
 				selected.selected = true;
 				Reg.selected.push(selected);
 			}
+			
+			list.setThumbs();
 		}
 	}
 	
