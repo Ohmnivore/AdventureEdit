@@ -138,7 +138,7 @@ class Main extends FlxUIState
 			
 			layers = new LayerGroup(Reg.project.layers);
 			select = new List(0, FlxG.height - 68, FlxG.width);
-			layerPanel = new LayerPanel(4, 32, Reg.project.layers);
+			layerPanel = new LayerPanel(4, 32, Reg.project.layers, layers);
 			tools = new ToolPanel(FlxG.width - 92, 32);
 			status = new StatusBar(6);
 			add(status);
