@@ -31,6 +31,7 @@ import ui.select.List;
 import ui.SimpleList;
 import ui.StatusBar;
 import ui.tools.Camera;
+import ui.tools.Clip;
 import ui.tools.Move;
 import ui.tools.Remove;
 import ui.tools.Select;
@@ -65,6 +66,7 @@ class Main extends FlxUIState
 	private var moveTool:Move;
 	private var cameraTool:Camera;
 	private var zoomTool:Zoom;
+	private var clipTool:Clip;
 	private var doEdit:Bool = true;
 	
 	private var grid:InfiniteGrid;
@@ -180,6 +182,7 @@ class Main extends FlxUIState
 			moveTool = new Move();
 			cameraTool = new Camera();
 			zoomTool = new Zoom(this);
+			clipTool = new Clip(layers, layerPanel);
 			
 			_ui.scrollFactor.set();
 			back.scrollFactor.set();
@@ -437,6 +440,14 @@ class Main extends FlxUIState
 				Reg.selected = [];
 				
 				Reg.level.saved = false;
+			}
+			else if (ID == "copy")
+			{
+				clipTool.copy();
+			}
+			else if (ID == "paste")
+			{
+				clipTool.paste();
 			}
 			else if (ID == "selectall")
 			{

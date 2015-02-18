@@ -17,5 +17,6 @@ class Reg
 	public static var project:Project;
 	public static var level:Level;
 	public static var selected:Array<EditImg> = [];
+	public static var copy:Array<EditImg> = [];
 	public static var backCam:FlxZoomCamera;
 }

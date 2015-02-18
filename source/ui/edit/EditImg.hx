@@ -66,6 +66,15 @@ class EditImg extends FlxSprite
 		new ImageHandler(P, this, addFilter);
 	}
 	
+	public function getCopy():EditImg
+	{
+		var ret:EditImg = new EditImg(x, y, path);
+		ret.width = width;
+		ret.height = height;
+		
+		return ret;
+	}
+	
 	private function addFilter(S:FlxSprite):Void
 	{
 		drop = new DropShadowFilter(0, 0, 0xff0000, .75, 10, 10, 2, 1);

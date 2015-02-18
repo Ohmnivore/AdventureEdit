@@ -14,8 +14,6 @@ TODO:
 * Custom fields for entities in EditProj
 * Rectangle entities
 * Layer visibility
-* Copy
-* Paste
 * Undo
 * Redo
 * Nodes
