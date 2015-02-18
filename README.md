@@ -4,7 +4,7 @@ just sprites, so I tried the GLEE2D editor. Unfortunately it generates very bulk
 Ogmo's entity system. To me, AdventureEdit is a clone of Ogmo Editor (in terms of functionality) adapted to sprite-based games. It combines Ogmo's entity system with a quick and intuitive image system. The UI is also very similar to Ogmo's.
 
 # Should you use this?
-Use at your own risk. The UI, while generally mimicking Ogmo Editor, differs in many places. It might also sometimes be unintuitive. Furthermore, AdventureEdit is pretty young so bugs are to be expected. I will soon provide Windows and maybe even Linux binaries, but you can easily compile the porject yourself for Windows, Linux, and Mac targets. Compilation requires the dev version of flixel, flixel-ui, and flixel-addons, as well as systools.
+Use at your own risk. The UI, while generally mimicking Ogmo Editor, differs in many places. It might also sometimes be unintuitive. Furthermore, AdventureEdit is pretty young so bugs are to be expected. I will soon provide Windows and maybe even Linux binaries, but you can easily compile the project yourself for Windows, Linux, and Mac targets. Compilation requires the dev version of flixel, flixel-ui, and flixel-addons, as well as systools.
 
 # TODO
 * Relative paths for saving image paths
