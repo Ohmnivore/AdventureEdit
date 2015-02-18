@@ -10,6 +10,7 @@ import haxe.xml.Fast;
 class Level
 {
 	public var saved:Bool = true;
+	public var xml:String;
 	
 	public var path:String;
 	public var width:Int = 640;
@@ -31,33 +32,39 @@ class Level
 			values.set(v, project.levelValues.get(v));
 		}
 		
-		if (XML != null && StringTools.trim(XML) != "")
+		xml = XML;
+		if (xml != null && StringTools.trim(xml) != "")
 		{
-			var xx:Xml = Xml.parse(XML).firstElement();
-			var x:Fast = new Fast(xx);
+			parseXML();
+		}
+	}
+	
+	public function parseXML():Void
+	{
+		var xx:Xml = Xml.parse(xml).firstElement();
+		var x:Fast = new Fast(xx);
+		
+		for (v in xx.attributes())
+		{
+			if (v != "width" && v != "height")
+				values.set(v, xx.get(v));
+		}
+		if (xx.get("width") != null && xx.get("height") != null)
+		{
+			width = Std.parseInt(xx.get("width"));
+			height = Std.parseInt(xx.get("height"));
+		}
+		
+		for (l in x.elements)
+		{
+			var layer:ShyGroup = layers.get(l.name);
 			
-			for (v in xx.attributes())
+			for (s in l.elements)
 			{
-				if (v != "width" && v != "height")
-					values.set(v, xx.get(v));
-			}
-			if (xx.get("width") != null && xx.get("height") != null)
-			{
-				width = Std.parseInt(xx.get("width"));
-				height = Std.parseInt(xx.get("height"));
-			}
-			
-			for (l in x.elements)
-			{
-				var layer:ShyGroup = layers.get(l.name);
-				
-				for (s in l.elements)
+				if (s.name == "img" && layer != null)
 				{
-					if (s.name == "img" && layer != null)
-					{
-						layer.add(new EditImg(Std.parseFloat(s.att.x), Std.parseFloat(s.att.y),
-							s.att.path));
-					}
+					layer.add(new EditImg(Std.parseFloat(s.att.x), Std.parseFloat(s.att.y),
+						s.att.path));
 				}
 			}
 		}
@@ -101,5 +108,13 @@ class Level
 	public function reset():Void
 	{
 		values = new Map<String, String>();
+	}
+	
+	public function getCopy():Level
+	{
+		var lvl:Level = new Level(layers, project, path, null);
+		lvl.xml = getXML().toString();
+		
+		return lvl;
 	}
 }

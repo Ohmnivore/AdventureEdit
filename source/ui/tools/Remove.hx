@@ -53,9 +53,11 @@ class Remove extends Tool
 		}
 		if (FlxG.mouse.justReleased)
 		{
+			var didRemove:Bool = false;
 			rect.visible = false;
 			for (s in getSelected())
 			{
+				didRemove = true;
 				var selected:EditImg = cast s;
 				if (selected.selected)
 				{
@@ -64,8 +66,11 @@ class Remove extends Tool
 				selected.kill();
 				selected.destroy();
 			}
-			
-			Reg.level.saved = false;
+			if (didRemove)
+			{
+				Reg.level.saved = false;
+				Reg.history.addHistory();
+			}
 		}
 	}
 	

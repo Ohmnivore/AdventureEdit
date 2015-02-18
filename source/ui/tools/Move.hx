@@ -25,13 +25,22 @@ class Move extends Tool
 		
 		if (FlxG.mouse.pressed)
 		{
+			var didMove:Bool = false;
 			for (s in Reg.selected)
 			{
-				s.x -= old.x - FlxG.mouse.screenX;
-				s.y -= old.y - FlxG.mouse.screenY;
+				if (s.alive)
+				{
+					didMove = true;
+					s.x -= old.x - FlxG.mouse.screenX;
+					s.y -= old.y - FlxG.mouse.screenY;
+				}
+			}
+			if (didMove)
+			{
+				Reg.level.saved = false;
+				Reg.history.addHistory();
 			}
 			
-			Reg.level.saved = false;
 			setOld();
 		}
 	}

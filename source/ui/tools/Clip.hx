@@ -33,6 +33,7 @@ class Clip
 	{
 		var addPoint:FlxPoint = FlxG.mouse.getWorldPosition(Reg.backCam);
 		
+		var didPaste:Bool = false;
 		for (s in Reg.copy)
 		{
 			if (s != null)
@@ -47,10 +48,16 @@ class Clip
 					
 					if (lPanel.currentLayer != null)
 					{
+						didPaste = true;
 						layers.get(lPanel.currentLayer).add(copy);
 					}
 				}
 			}
+		}
+		if (didPaste)
+		{
+			Reg.level.saved = false;
+			Reg.history.addHistory();
 		}
 	}
 }

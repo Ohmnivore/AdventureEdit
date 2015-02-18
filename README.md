@@ -14,8 +14,6 @@ requires the dev version of flixel, flixel-ui, and flixel-addons, as well as sys
 * Relative paths for saving image paths
 * Custom fields for entities in EditProj
 * Rectangle entities
-* Undo
-* Redo
 * Nodes
 
 # Features that may be added in the future

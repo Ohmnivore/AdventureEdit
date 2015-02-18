@@ -32,6 +32,7 @@ import ui.SimpleList;
 import ui.StatusBar;
 import ui.tools.Camera;
 import ui.tools.Clip;
+import ui.tools.History;
 import ui.tools.Move;
 import ui.tools.Remove;
 import ui.tools.Select;
@@ -67,6 +68,7 @@ class Main extends FlxUIState
 	private var cameraTool:Camera;
 	private var zoomTool:Zoom;
 	private var clipTool:Clip;
+	private var historyTool:History;
 	private var doEdit:Bool = true;
 	
 	private var grid:InfiniteGrid;
@@ -182,6 +184,8 @@ class Main extends FlxUIState
 			moveTool = new Move();
 			cameraTool = new Camera();
 			zoomTool = new Zoom(this);
+			historyTool = new History(layers);
+			Reg.history = historyTool;
 			clipTool = new Clip(layers, layerPanel);
 			
 			_ui.scrollFactor.set();
@@ -234,6 +238,8 @@ class Main extends FlxUIState
 			menuView.visible = false;
 			menuView.active = false;
 		}
+		else
+			Reg.history.addHistory();
 	}
 	
 	public function setLevelSize():Void
@@ -430,16 +436,29 @@ class Main extends FlxUIState
 	{
 		if (Reg.level != null)
 		{
-			if (ID == "cut")
+			if (ID == "undo")
 			{
+				historyTool.undo();
+			}
+			else if (ID == "redo")
+			{
+				historyTool.redo();
+			}
+			else if (ID == "cut")
+			{
+				var didCut:Bool = false;
 				for (s in Reg.selected)
 				{
+					didCut = true;
 					s.kill();
 					s.destroy();
 				}
 				Reg.selected = [];
-				
-				Reg.level.saved = false;
+				if (didCut)
+				{
+					Reg.level.saved = false;
+					Reg.history.addHistory();
+				}
 			}
 			else if (ID == "copy")
 			{
