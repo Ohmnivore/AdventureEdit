@@ -11,7 +11,6 @@ even Linux binaries, but you can easily compile the project yourself for Windows
 requires the dev version of flixel, flixel-ui, and flixel-addons, as well as systools.
 
 # TODO
-* Relative paths for saving image paths
 * Add entity tool
 * Resize tool
 * Add node tool

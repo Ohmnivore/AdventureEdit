@@ -1,5 +1,6 @@
 package save;
 import ext.OrderedMap;
+import haxe.io.Path;
 import ui.edit.EditImg;
 import ui.LayerGroup;
 import haxe.xml.Fast;
@@ -65,7 +66,7 @@ class Level
 				if (s.name == "img" && layer != null)
 				{
 					layer.add(new EditImg(Std.parseFloat(s.att.x), Std.parseFloat(s.att.y),
-						s.att.path));
+						Path.normalize(Path.directory(project.path) + s.att.path)));
 				}
 			}
 		}
@@ -94,7 +95,9 @@ class Level
 					var sData:Xml = Xml.createElement("img");
 					sData.set("x", cast s.x);
 					sData.set("y", cast s.y);
-					sData.set("path", img.path);
+					//sData.set("path", img.path);
+					sData.set("path", Relative.getRelFrom(
+						img.path, Path.directory(project.path)));
 					
 					layerData.addChild(sData);
 				}

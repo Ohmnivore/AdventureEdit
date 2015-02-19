@@ -19,6 +19,7 @@ import lime.app.Config;
 import openfl.geom.Rectangle;
 import save.Cookies;
 import save.Level;
+import save.Relative;
 import sys.io.File;
 import ui.AssetsGr;
 import ui.edit.EditImg;
