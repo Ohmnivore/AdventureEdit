@@ -238,8 +238,10 @@ class Main extends FlxUIState
 			menuView.visible = false;
 			menuView.active = false;
 		}
-		else
-			Reg.history.addHistory();
+		//if (Reg.project != null && Reg.level != null)
+		//{
+			//Reg.history.addHistory();
+		//}
 	}
 	
 	public function setLevelSize():Void

@@ -12,9 +12,10 @@ requires the dev version of flixel, flixel-ui, and flixel-addons, as well as sys
 
 # TODO
 * Relative paths for saving image paths
-* Custom fields for entities in EditProj
-* Rectangle entities
-* Nodes
+* Add entity tool
+* Resize tool
+* Add node tool
+* Remove node tool
 
 # Features that may be added in the future
 * Sprite color tinting

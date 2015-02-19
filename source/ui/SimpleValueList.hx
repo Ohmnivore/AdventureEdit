@@ -1,4 +1,5 @@
 package ui;
+import ext.OrderedMap;
 import flixel.addons.ui.FlxUIButton;
 import flixel.addons.ui.FlxUIGroup;
 import flixel.addons.ui.FlxUIInputText;
@@ -19,7 +20,7 @@ class SimpleValueList extends FlxUIGroup
 	private var editValue:FlxUIInputText;
 	private var dEditValue:FlxUIText;
 	
-	public var defs:Map<String, String>;
+	public var defs:OrderedMap<String, String>;
 	
 	public function new(X:Float, Y:Float)
 	{
@@ -43,7 +44,7 @@ class SimpleValueList extends FlxUIGroup
 		editUI.add(dEditValue);
 		editUI.add(editValue);
 		
-		defs = new Map<String, String>();
+		defs = new OrderedMap<String, String>(new Map<String, String>());
 	}
 	
 	public function unToggle():Void

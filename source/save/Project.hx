@@ -1,4 +1,5 @@
 package save;
+import ext.OrderedMap;
 import haxe.xml.Fast;
 
 /**
@@ -12,7 +13,7 @@ class Project
 	public var name:String = "New Project";
 	public var bgColor:String = "0x7DA0FF";
 	public var gridColor:String = "0xFFF05A";
-	public var levelValues:Map<String, String>;
+	public var levelValues:OrderedMap<String, String>;
 	
 	public var layers:Array<String> = [];
 	
@@ -22,7 +23,7 @@ class Project
 	{
 		path = Path;
 		
-		levelValues = new Map<String, String>();
+		levelValues = new OrderedMap<String, String>(new Map<String, String>());
 		
 		if (XML != null && StringTools.trim(XML) != "")
 		{
@@ -42,7 +43,13 @@ class Project
 				layers.push(l.name);
 			}
 			
-			//TODO: Entities
+			for (e in x.node.entities.elements)
+			{
+				var ent:Entity = new Entity();
+				ent.parseXML(e.x);
+				
+				entities.push(ent);
+			}
 		}
 	}
 	
@@ -71,13 +78,19 @@ class Project
 		}
 		
 		//TODO: Entities
+		var entData:Xml = Xml.createElement("entities");
+		xml.addChild(entData);
+		for (e in entities)
+		{
+			entData.addChild(e.getXML());
+		}
 		
 		return xml;
 	}
 	
 	public function reset():Void
 	{
-		levelValues = new Map<String, String>();
+		levelValues = new OrderedMap<String, String>(new Map<String, String>());
 		layers = [];
 		entities = [];
 	}

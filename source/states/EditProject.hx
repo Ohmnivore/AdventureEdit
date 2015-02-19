@@ -55,12 +55,19 @@ class EditProject extends FlxUIState
 		
 		pLevelValues = new ValueList(10, 200, "Level values");
 		pLayers = new SimpleList(10, 10);
-		pEntities = new EntList(10, 10);
 		
 		var tabs:FlxUITabMenu = cast _ui.getAsset("tabs");
+		var entities:FlxUIGroup = tabs.getTabGroup("entities");
+		var entProp:ValueList = new ValueList(294, 230, "Custom properties");
+		entities.add(entProp);
+		pEntities = new EntList(10, 10, entProp,
+			cast getWidget(entities, "width"),
+			cast getWidget(entities, "height"),
+			cast getWidget(entities, "limit"),
+			cast getWidget(entities, "color"));
+		
 		var settings:FlxUIGroup = tabs.getTabGroup("settings");
 		var layers:FlxUIGroup = tabs.getTabGroup("layers");
-		var entities:FlxUIGroup = tabs.getTabGroup("entities");
 		tabs.showTabId("settings");
 		settings.add(pLevelValues);
 		layers.add(pLayers);
@@ -95,6 +102,11 @@ class EditProject extends FlxUIState
 		for (layer in p.layers)
 		{
 			pLayers.addNew(layer);
+		}
+		
+		for (ent in p.entities)
+		{
+			pEntities.addNewEnt(ent);
 		}
 	}
 	
@@ -131,14 +143,18 @@ class EditProject extends FlxUIState
 		
 		for (layer in pLayers.list.members)
 		{
-			
 			p.layers.push(cast(layer, FlxUIButton).label.text);
 		}
 		
-		//TODO: entities
+		for (ent in pEntities.ents.iterator())
+		{
+			p.entities.push(ent);
+		}
 		
 		var toSave:Xml = p.getXML();
 		File.saveContent(path, toSave.toString());
+		//Reg.project = null;
+		//Reg.level = null;
 		FlxG.switchState(new Main());
 	}
 	

@@ -1,4 +1,5 @@
 package ui;
+import ext.OrderedMap;
 import flixel.addons.ui.FlxUIButton;
 import flixel.addons.ui.FlxUIGroup;
 import flixel.addons.ui.FlxUIInputText;
@@ -24,7 +25,7 @@ class ValueList extends FlxUIGroup
 	private var dEditName:FlxUIText;
 	private var dEditDefault:FlxUIText;
 	
-	public var defs:Map<String, String>;
+	public var defs:OrderedMap<String, String>;
 	
 	public function new(X:Float, Y:Float, Header:String)
 	{
@@ -55,15 +56,17 @@ class ValueList extends FlxUIGroup
 		dEditName.text = "Name";
 		
 		editName = new FlxUIInputText();
-		editName.x = dEditName.width + 10;
+		editName.x = dEditName.width + 16;
 		editName.text = "";
 		
 		dEditDefault = new FlxUIText();
-		dEditDefault.x = editName.x + editName.width + 10;
+		dEditDefault.x = dEditName.x;
+		dEditDefault.y = dEditName.y + dEditName.height + 4;
 		dEditDefault.text = "Default";
 		
 		editDefault = new FlxUIInputText();
-		editDefault.x = dEditDefault.x + dEditDefault.width + 10;
+		editDefault.x = editName.x;
+		editDefault.y = dEditDefault.y;
 		editDefault.text = "";
 		
 		editUI.add(dEditName);
@@ -71,7 +74,7 @@ class ValueList extends FlxUIGroup
 		editUI.add(dEditDefault);
 		editUI.add(editDefault);
 		
-		defs = new Map<String, String>();
+		defs = new OrderedMap<String, String>(new Map<String, String>());
 	}
 	
 	private function unToggle():Void

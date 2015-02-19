@@ -1,4 +1,5 @@
 package save;
+import ext.OrderedMap;
 import ui.edit.EditImg;
 import ui.LayerGroup;
 import haxe.xml.Fast;
@@ -15,7 +16,7 @@ class Level
 	public var path:String;
 	public var width:Int = 640;
 	public var height:Int = 480;
-	public var values:Map<String, String>;
+	public var values:OrderedMap<String, String>;
 	
 	private var layers:LayerGroup;
 	private var project:Project;
@@ -26,7 +27,7 @@ class Level
 		project = P;
 		path = Path;
 		
-		values = new Map<String, String>();
+		values = new OrderedMap<String, String>(new Map<String, String>());
 		for (v in project.levelValues.keys())
 		{
 			values.set(v, project.levelValues.get(v));
@@ -107,7 +108,7 @@ class Level
 	
 	public function reset():Void
 	{
-		values = new Map<String, String>();
+		values = new OrderedMap<String, String>(new Map<String, String>());
 	}
 	
 	public function getCopy():Level

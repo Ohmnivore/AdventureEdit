@@ -23,6 +23,8 @@ class SimpleList extends FlxUIGroup
 	private var editName:FlxUIInputText;
 	private var dEditName:FlxUIText;
 	
+	private var newName:String = "newLayer";
+	
 	public function new(X:Float, Y:Float) 
 	{
 		super(X, Y);
@@ -67,7 +69,7 @@ class SimpleList extends FlxUIGroup
 	{
 		unToggle();
 		
-		var name:String = "newLayer";
+		var name:String = newName;
 		var newBtn:FlxUIButton = new FlxUIButton(0, 0, name);
 		newBtn.has_toggle = true;
 		newBtn.toggled = true;

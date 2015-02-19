@@ -33,7 +33,7 @@
 			<text id="dColor" x="40%" text="Color" />
 			
 			<align axis="vertical" spacing="10" resize="false">
-				<bounds top="10" bottom="50%"/>
+				<bounds top="10" bottom="25%"/>
 				<objects value="width,height,limit,color"/>
 				<objects value="dWidth,dHeight,dLimit,dColor"/>
 			</align>
