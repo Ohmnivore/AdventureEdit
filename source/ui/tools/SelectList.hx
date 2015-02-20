@@ -7,6 +7,7 @@ import haxe.io.Path;
 import save.Cookies;
 import sys.FileSystem;
 import flixel.ui.FlxButton;
+import ui.edit.EditEnt;
 import ui.edit.EditImg;
 import ui.tools.SelectThumbnail;
 
@@ -48,17 +49,26 @@ class SelectList extends FlxUIList
 		{
 			if (s.alive)
 			{
-				var thumb:SelectThumbnail = new SelectThumbnail(0, 0, s, onSelect);
-				
-				var scale:Float = 64.0 / thumb.width;
-				if (thumb.width < thumb.height)
+				if (Std.is(s, EditImg))
 				{
-					scale = 64.0 / thumb.height;
+					var thumb:SelectThumbnail = new SelectThumbnail(0, 0, cast s, onSelect);
+					
+					var scale:Float = 64.0 / thumb.width;
+					if (thumb.width < thumb.height)
+					{
+						scale = 64.0 / thumb.height;
+					}
+					thumb.scale.set(scale, scale);
+					thumb.updateHitbox();
+					
+					add(thumb);
 				}
-				thumb.scale.set(scale, scale);
-				thumb.updateHitbox();
-				
-				add(thumb);
+				else
+				{
+					var e:EditEnt = cast s;
+					var thumb:EntityThumbnail = new EntityThumbnail(e.ent, onSelect2);
+					thumb.editEnt = e;
+				}
 			}
 		}
 	}
@@ -73,6 +83,21 @@ class SelectList extends FlxUIList
 		Reg.selected = [];
 		
 		var single:EditImg = cast T.toCopy;
+		single.selected = true;
+		Reg.selected.push(single);
+		
+		setThumbs();
+	}
+	private function onSelect2(T:EntityThumbnail):Void
+	{
+		for (s in Reg.selected)
+		{
+			if (s.alive)
+				s.selected = false;
+		}
+		Reg.selected = [];
+		
+		var single:EditEnt = T.editEnt;
 		single.selected = true;
 		Reg.selected.push(single);
 		

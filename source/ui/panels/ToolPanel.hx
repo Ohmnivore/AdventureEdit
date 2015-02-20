@@ -26,6 +26,8 @@ class ToolPanel extends FlxUIGroup
 		addTool("Remove");
 		addTool("Select");
 		addTool("Move");
+		addTool("Resize");
+		addTool("Add Entity");
 	}
 	
 	private function unToggleAll():Void

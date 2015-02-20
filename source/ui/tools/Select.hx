@@ -6,7 +6,7 @@ import flixel.math.FlxPoint;
 import flixel.math.FlxRect;
 import flixel.util.FlxSpriteUtil;
 import states.Main;
-import ui.edit.EditImg;
+import ui.edit.EditBase;
 import ui.LayerGroup;
 import ui.panels.LayerPanel;
 import ui.tools.SelectList;
@@ -83,7 +83,7 @@ class Select extends Tool
 			Reg.selected = [];
 			for (s in getSelected())
 			{
-				var selected:EditImg = cast s;
+				var selected:EditBase = cast s;
 				selected.selected = true;
 				Reg.selected.push(selected);
 			}

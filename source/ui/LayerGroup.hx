@@ -2,6 +2,7 @@ package ui;
 import flixel.group.FlxGroup;
 import flixel.group.FlxSpriteGroup;
 import flixel.FlxSprite;
+import ui.edit.EditBase;
 import ui.edit.EditImg;
 
 /**
@@ -48,9 +49,9 @@ class LayerGroup extends ShyGroup
 			
 			for (s in layer.members)
 			{
-				if (Std.is(s, EditImg) && s.alive)
+				if (Std.is(s, EditBase) && s.alive)
 				{
-					var img:EditImg = cast s;
+					var img:EditBase = cast s;
 					img.selected = Selected;
 				}
 			}

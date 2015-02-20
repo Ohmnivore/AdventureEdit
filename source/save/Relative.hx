@@ -11,7 +11,6 @@ class Relative
 	{
 		Original = Path.normalize(Original);
 		From = Path.normalize(From);
-		trace(Original, From);
 		
 		var ret:String = "";
 		var common:String = getCommon(Original, From);

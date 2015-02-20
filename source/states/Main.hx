@@ -31,11 +31,13 @@ import ui.panels.ToolPanel;
 import ui.select.List;
 import ui.SimpleList;
 import ui.StatusBar;
+import ui.tools.AddEntity;
 import ui.tools.Camera;
 import ui.tools.Clip;
 import ui.tools.History;
 import ui.tools.Move;
 import ui.tools.Remove;
+import ui.tools.Resize;
 import ui.tools.Select;
 import ui.tools.Shortcut;
 import ui.tools.Tool;
@@ -66,6 +68,8 @@ class Main extends FlxUIState
 	private var removeTool:Remove;
 	private var selectTool:Select;
 	private var moveTool:Move;
+	private var addEntityTool:AddEntity;
+	private var resizeTool:Resize;
 	private var cameraTool:Camera;
 	private var zoomTool:Zoom;
 	private var clipTool:Clip;
@@ -183,6 +187,8 @@ class Main extends FlxUIState
 			removeTool = new Remove(layers, layerPanel);
 			selectTool = new Select(layers, layerPanel, this);
 			moveTool = new Move();
+			addEntityTool = new AddEntity(layers, layerPanel, this);
+			resizeTool = new Resize();
 			cameraTool = new Camera();
 			zoomTool = new Zoom(this);
 			historyTool = new History(layers);
@@ -547,6 +553,10 @@ class Main extends FlxUIState
 					currentTool = selectTool;
 				else if (currentToolName == "Move")
 					currentTool = moveTool;
+				else if (currentToolName == "Resize")
+					currentTool = resizeTool;
+				else if (currentToolName == "Add Entity")
+					currentTool = addEntityTool;
 				
 				currentTool.opened = true;
 			}
@@ -562,5 +572,7 @@ class Main extends FlxUIState
 		removeTool.opened = false;
 		selectTool.opened = false;
 		moveTool.opened = false;
+		addEntityTool.opened = false;
+		resizeTool.opened = false;
 	}
 }

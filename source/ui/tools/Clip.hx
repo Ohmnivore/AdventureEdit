@@ -1,6 +1,7 @@
 package ui.tools;
 import flixel.FlxG;
 import flixel.math.FlxPoint;
+import ui.edit.EditBase;
 import ui.edit.EditImg;
 import ui.LayerGroup;
 import ui.panels.LayerPanel;
@@ -40,7 +41,7 @@ class Clip
 			{
 				if (s.alive)
 				{
-					var copy:EditImg = s.getCopy();
+					var copy:EditBase = s.getCopy();
 					copy.x = addPoint.x;
 					copy.y = addPoint.y;
 					

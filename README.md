@@ -11,8 +11,8 @@ even Linux binaries, but you can easily compile the project yourself for Windows
 requires the dev version of flixel, flixel-ui, and flixel-addons, as well as systools.
 
 # TODO
-* Add entity tool
-* Resize tool
+* Save and load entities in level file
+* Entity selection -> set custom fields
 * Add node tool
 * Remove node tool
 
