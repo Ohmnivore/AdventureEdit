@@ -1,4 +1,5 @@
 package ui.edit;
+import ext.OrderedMap;
 import flixel.math.FlxPoint;
 import flixel.util.FlxSpriteUtil;
 import save.Entity;
@@ -10,6 +11,8 @@ import save.Entity;
 class EditEnt extends EditBase
 {
 	public var ent:Entity;
+	public var props:OrderedMap<String, String>;
+	
 	private var entColor:Int;
 	private var entFillColor:Int;
 	private var old:FlxPoint;
@@ -24,6 +27,7 @@ class EditEnt extends EditBase
 	public function new(Ent:Entity = null, X:Float = 0, Y:Float = 0) 
 	{
 		super(X, Y);
+		props = new OrderedMap<String, String>(new Map<String, String>());
 		ent = Ent;
 		if (ent != null)
 		{
@@ -32,6 +36,10 @@ class EditEnt extends EditBase
 			
 			makeGraphic(Std.parseInt(Ent.width), Std.parseInt(Ent.height),
 				0x0, true);
+			for (p in ent.props.keys())
+			{
+				props.set(p, ent.props.get(p));
+			}
 		}
 		else
 		{
@@ -48,6 +56,13 @@ class EditEnt extends EditBase
 		xml.set("y", Std.string(y));
 		xml.set("width", Std.string(width));
 		xml.set("height", Std.string(height));
+		
+		for (p in props.keys())
+		{
+			var sub:Xml = Xml.createElement(p);
+			sub.set("value", props.get(p));
+			xml.addChild(sub);
+		}
 		
 		return xml;
 	}
@@ -66,6 +81,11 @@ class EditEnt extends EditBase
 		
 		entColor = Std.parseInt(ent.color) + 0xff000000;
 		entFillColor = Std.parseInt(ent.color) + 0xaa000000;
+		
+		for (sub in X.iterator())
+		{
+			props.set(sub.nodeName, sub.get("value"));
+		}
 	}
 	
 	override public function update(elapsed:Float):Void 

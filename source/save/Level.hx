@@ -108,7 +108,7 @@ class Level
 					
 					layerData.addChild(sData);
 				}
-				else
+				else if (Std.is(s, EditEnt) && s.alive)
 				{
 					var ent:EditEnt = cast s;
 					layerData.addChild(ent.getXML());

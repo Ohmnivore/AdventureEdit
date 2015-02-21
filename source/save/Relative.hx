@@ -16,12 +16,19 @@ class Relative
 		var common:String = getCommon(Original, From);
 		ret = From.substr(common.length);
 		
-		var ups:Int = countCharOccurences(ret, "/") + 1;
+		//var ups:Int = countCharOccurences(ret, "/") + 1;
+		var ups:Int = countCharOccurences(ret, "/");
+		if (ups > 0)
+			ups += 2;
 		ret = Original.substr(common.length);
 		var i:Int = 0;
-		while (i <= ups)
+		//while (i <= ups)
+		while (i < ups)
 		{
-			ret = "../" + ret;
+			if (ret.charAt(0) != "/")
+				ret = "../" + ret;
+			else
+				ret = ".." + ret;
 			i++;
 		}
 		

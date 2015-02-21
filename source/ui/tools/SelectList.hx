@@ -68,6 +68,7 @@ class SelectList extends FlxUIList
 					var e:EditEnt = cast s;
 					var thumb:EntityThumbnail = new EntityThumbnail(e.ent, onSelect2);
 					thumb.editEnt = e;
+					add(thumb);
 				}
 			}
 		}

@@ -97,7 +97,9 @@ class Main extends FlxUIState
 	{
 		super.getEvent(id, sender, data, params);
 		
-		if (id == "click_button" || id == "click_dropdown")
+		if (id == "click_button" || id == "over_button" ||
+			id == "out_button" || id == "click_dropdown" ||
+			id == "down_button")
 		{
 			doEdit = false;
 		}
@@ -527,6 +529,15 @@ class Main extends FlxUIState
 	override public function update(elapsed:Float):Void 
 	{
 		super.update(elapsed);
+		
+		if (selectTool != null)
+		{
+			if (selectTool.entList != null)
+				if (selectTool.entList.overlapsPoint(FlxG.mouse.getScreenPosition(FlxG.camera)))
+				{
+					doEdit = false;
+				}
+		}
 		
 		if (Reg.project != null && Reg.level != null)
 		{
