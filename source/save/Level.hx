@@ -1,6 +1,7 @@
 package save;
 import ext.OrderedMap;
 import haxe.io.Path;
+import ui.edit.EditEnt;
 import ui.edit.EditImg;
 import ui.LayerGroup;
 import haxe.xml.Fast;
@@ -68,6 +69,12 @@ class Level
 					layer.add(new EditImg(Std.parseFloat(s.att.x), Std.parseFloat(s.att.y),
 						Path.normalize(Path.directory(project.path) + s.att.path)));
 				}
+				if (s.name == "entity" && layer != null)
+				{
+					var e:EditEnt = new EditEnt();
+					e.loadXml(s.x);
+					layer.add(e);
+				}
 			}
 		}
 	}
@@ -100,6 +107,11 @@ class Level
 						img.path, Path.directory(project.path)));
 					
 					layerData.addChild(sData);
+				}
+				else
+				{
+					var ent:EditEnt = cast s;
+					layerData.addChild(ent.getXML());
 				}
 			}
 		}

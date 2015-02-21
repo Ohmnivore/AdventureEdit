@@ -21,16 +21,51 @@ class EditEnt extends EditBase
 		return _selected;
 	}
 	
-	public function new(Ent:Entity, X:Float = 0, Y:Float = 0) 
+	public function new(Ent:Entity = null, X:Float = 0, Y:Float = 0) 
 	{
 		super(X, Y);
 		ent = Ent;
-		entColor = Std.parseInt(Ent.color) + 0xff000000;
-		entFillColor = Std.parseInt(Ent.color) + 0xaa000000;
-		
-		makeGraphic(Std.parseInt(Ent.width), Std.parseInt(Ent.height),
-			0x0, true);
+		if (ent != null)
+		{
+			entColor = Std.parseInt(Ent.color) + 0xff000000;
+			entFillColor = Std.parseInt(Ent.color) + 0xaa000000;
+			
+			makeGraphic(Std.parseInt(Ent.width), Std.parseInt(Ent.height),
+				0x0, true);
+		}
+		else
+		{
+			makeGraphic(16, 16, 0x0, true);
+		}
 		old = new FlxPoint(-1, -1);
+	}
+	
+	public function getXML():Xml
+	{
+		var xml:Xml = Xml.createElement("entity");
+		xml.set("name", ent.name);
+		xml.set("x", Std.string(x));
+		xml.set("y", Std.string(y));
+		xml.set("width", Std.string(width));
+		xml.set("height", Std.string(height));
+		
+		return xml;
+	}
+	
+	public function loadXml(X:Xml):Void
+	{
+		for (e in Reg.project.entities)
+		{
+			if (e.name == X.get("name"))
+				ent = e;
+		}
+		x = Std.parseFloat(X.get("x"));
+		y = Std.parseFloat(X.get("y"));
+		width = Std.parseFloat(X.get("width"));
+		height = Std.parseFloat(X.get("height"));
+		
+		entColor = Std.parseInt(ent.color) + 0xff000000;
+		entFillColor = Std.parseInt(ent.color) + 0xaa000000;
 	}
 	
 	override public function update(elapsed:Float):Void 

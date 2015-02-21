@@ -11,12 +11,12 @@ even Linux binaries, but you can easily compile the project yourself for Windows
 requires the dev version of flixel, flixel-ui, and flixel-addons, as well as systools.
 
 # TODO
-* Save and load entities in level file
 * Entity selection -> set custom fields
-* Add node tool
-* Remove node tool
 
 # Features that may be added in the future
+* Add node tool
+* Remove node tool
+* Sprite scaling
 * Sprite color tinting
 * Set sprite origin
 * Roatate sprite

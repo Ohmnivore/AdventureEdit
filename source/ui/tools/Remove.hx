@@ -1,5 +1,6 @@
 package ui.tools;
 import flixel.math.FlxPoint;
+import ui.edit.EditBase;
 import ui.panels.LayerPanel;
 import flixel.FlxSprite;
 import flixel.FlxG;
@@ -58,7 +59,7 @@ class Remove extends Tool
 			for (s in getSelected())
 			{
 				didRemove = true;
-				var selected:EditImg = cast s;
+				var selected:EditBase = cast s;
 				if (selected.selected)
 				{
 					Reg.selected.remove(selected);
