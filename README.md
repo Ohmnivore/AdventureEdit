@@ -1,5 +1,8 @@
 ![](/screenshot.png)
 
+# Download
+[https://github.com/Ohmnivore/AdventureEdit/releases](https://github.com/Ohmnivore/AdventureEdit/releases)
+
 # AdventureEdit
 AdventureEdit is a 2D sprite-based editor I'm writing for a game I'm working on. The game in question doesn't use tiles,
 just sprites, so I tried the GLEE2D editor. Unfortunately it generates very bulky XML files, and lacks something akin to
