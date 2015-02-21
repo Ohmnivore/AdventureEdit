@@ -1,3 +1,5 @@
+![](/screenshot.png)
+
 # AdventureEdit
 AdventureEdit is a 2D sprite-based editor I'm writing for a game I'm working on. The game in question doesn't use tiles,
 just sprites, so I tried the GLEE2D editor. Unfortunately it generates very bulky XML files, and lacks something akin to
@@ -5,7 +7,8 @@ Ogmo's entity system. To me, AdventureEdit is a clone of Ogmo Editor (in terms o
 It combines Ogmo's entity system with a quick and intuitive image system. The UI is also very similar to Ogmo's.
 
 # Should you use this?
-Use at your own risk. The UI, while generally mimicking Ogmo Editor, differs in many places. It might also sometimes be
+Use at your own risk. I'm now working on my game so I won't be working on this for a while, so it'll be in an unfinished state for a months or two. 
+The UI, while generally mimicking Ogmo Editor, differs in many places. It might also sometimes be
 unintuitive. Furthermore, AdventureEdit is pretty young so bugs are to be expected. I will soon provide Windows and maybe
 even Linux binaries, but you can easily compile the project yourself for Windows, Linux, and Mac targets. Compilation
 requires the dev version of flixel, flixel-ui, and flixel-addons, as well as systools.
