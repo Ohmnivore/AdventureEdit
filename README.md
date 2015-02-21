@@ -30,6 +30,8 @@ requires the dev version of flixel, flixel-ui, and flixel-addons, as well as sys
 | Remove tool           | 2                          |
 | Select tool           | 3                          |
 | Move tool             | 4                          |
+| Resize tool           | 5                          |
+| Add Entity tool       | 6                          |
 | **Level**             |                            |
 | Edit level properties | Ctrl+l                     |
 | New level             | Ctrl+n                     |

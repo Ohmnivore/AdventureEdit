@@ -29,6 +29,10 @@ class Shortcut
 			tools.setTool("Select");
 		else if (FlxG.keys.justPressed.FOUR)
 			tools.setTool("Move");
+		else if (FlxG.keys.justPressed.FIVE)
+			tools.setTool("Resize");
+		else if (FlxG.keys.justPressed.SIX)
+			tools.setTool("Add Entity");
 		
 		//Zoom
 		if (FlxG.mouse.wheel > 0)
